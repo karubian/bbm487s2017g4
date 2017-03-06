@@ -6,7 +6,7 @@
 
 Ali Burak ÖZAKINCI - 21427162 - Project Manager,Developer
 
-Aishat Temitope OLOMOWEWE - Architect, Analyst
+Aishat Temitope OLOMOWEWE - 21603775 - Architect, Analyst
 
 Sabit ÇATALTAŞ - 21692544 - Tester
 
