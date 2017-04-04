@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/karubian/bbm487s2017g4.svg?branch=master)](https://travis-ci.org/karubian/bbm487s2017g4)
+
 ## BBM487 Software Engineering Lab. - 2017 Spring - Group 4
 
 ## Library Book Loan System
