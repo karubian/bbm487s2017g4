@@ -12,6 +12,13 @@ Aishat Temitope OLOMOWEWE - 21603775 - Architect
 
 Sabit ÇATALTAŞ - 21692544 - Tester
 
+### Demo Credentials
+
+```
+Username : member
+Password : 1122
+```
+
 ### Installation
 
 ```
