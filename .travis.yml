@@ -21,4 +21,7 @@ install:
   - cd /builds/sip-4.17 && python configure.py && sudo make && sudo make install
   - cd /builds/PyQt-gpl-5.4.1 && python configure.py --confirm-license && sudo make && sudo make install
 
-script: python src/tests/InitTest.py
+script:
+    - cd src
+    - cd tests
+    - python init_test.py
