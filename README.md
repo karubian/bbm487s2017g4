@@ -12,6 +12,15 @@ Aishat Temitope OLOMOWEWE - 21603775 - Architect
 
 Sabit ÇATALTAŞ - 21692544 - Tester
 
+### Installation
+
+```
+pip -install -r requirements.txt
+```
+```
+python src/app.py
+```
+
 # ACADEMIC INTEGRITY
 
 The Department of Computer Science believes that academic integrity is a core principle of education. According to the Center for Academic Integrity (www.academicintegrity.org), academic integrity begins as a commitment to five fundamental values: honesty, trust, fairness, respect and responsibility. These values begin with the individual and extend to others in the community of learning. In the classroom, they give rise to the following concrete but non-exhaustive rules for student behavior: Students are to do all assignments individually, with no collaboration or sharing of work, unless the instructor explicitly permits collaboration. If the instructor does not explicitly permit collaboration and one student shows or gives his/her work to another, then both students are considered to be cheating. Students may not use work provided by any person outside the class or by any external source such as the Web. Furthermore, students may not solicit other people to do assignments (in whole or in part) for them.
