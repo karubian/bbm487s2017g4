@@ -1,8 +1,9 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-from views.Ui_MemberHome import Ui_MemberHome
+from PyQt5 import QtWidgets
+
+from views.gen.Ui_MemberHome import Ui_MemberHome
 
 
-class HomeController(Ui_MemberHome):
+class MemberHomeView(Ui_MemberHome):
     def __init__(self):
         self.memberHome = QtWidgets.QMainWindow()
         self.ui = Ui_MemberHome()
@@ -14,7 +15,7 @@ class HomeController(Ui_MemberHome):
         self.ui.GreetingLabel.setText("Hi, " + str(self.currentUser.name) + " " + str(self.currentUser.surname))
 
     def logout(self):
-        import controllers.LoginController as LoginController
+        import views.LoginView as LoginController
         self.memberHome.hide()
         self.ui = LoginController.LoginController()
         self.ui.show()
