@@ -26,6 +26,7 @@ Password : 1122
 ### Installation
 
 ```
+Install appropriate version of PyQT5 to your python version.
 pip -install -r requirements.txt
 ```
 ```
