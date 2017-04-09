@@ -1,12 +1,12 @@
 from PyQt5 import QtWidgets
-from views.gen.Ui_MemberHome import Ui_memberMainWindow
+from views.gen.Ui_LibrarianHome import Ui_libraryMainWindow
 
 
-class MemberHomeView(Ui_memberMainWindow):
+class LibrarianHomeView(Ui_libraryMainWindow):
     def __init__(self):
-        self.memberHome = QtWidgets.QMainWindow()
-        self.ui = Ui_memberMainWindow()
-        self.ui.setupUi(self.memberHome)
+        self.librarianHome = QtWidgets.QMainWindow()
+        self.ui = Ui_libraryMainWindow()
+        self.ui.setupUi(self.librarianHome)
         self.ui.logoutButton.clicked.connect(self.logout)
         self.currentUser = None
 
@@ -15,9 +15,9 @@ class MemberHomeView(Ui_memberMainWindow):
 
     def logout(self):
         import views.LoginView as LoginView
-        self.memberHome.hide()
+        self.librarianHome.hide()
         self.ui = LoginView.LoginView()
         self.ui.show()
 
     def show(self):
-        self.memberHome.show()
+        self.librarianHome.show()
