@@ -7,11 +7,11 @@ from .Singleton import Singleton
 @Singleton
 class DbClient:
     def __init__(self):
-        self.uri = 'mongodb://lib_manager:11223344@ds149030.mlab.com:49030/bbm487_library'
+        self.uri = 'mongodb://library_manager:11223344@ds149030.mlab.com:49030/bbm487_library'
         self.client = pymongo.MongoClient(self.uri)
         self.db = self.client.bbm487_library
 
-    def authorization(self, username, passkey,isLibrary):
+    def authorization(self, username, passkey, isLibrary):
         if isLibrary:
             if self.db.librarians.find_one({"username": username, "password": passkey}) is not None:
             # found = self.db.members.find({"username": username, "password": passkey})
@@ -37,10 +37,10 @@ class DbClient:
 
     def list_all_users(self):
         found = self.db.members.find({})
-        for records in found:
-            print(records)
-
-        return found
+        member_list = []
+        for record in found:
+            member_list.append(record["username"])
+        return member_list
 
     def close_session(self):
         self.client.close()
