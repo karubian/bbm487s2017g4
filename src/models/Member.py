@@ -2,6 +2,10 @@ from .User import User
 
 
 class Member(User):
-    def __init__(self,username,password):
-        super().__init__(username,password)
+    def __init__(self,username,password,name,surname,email):
+        super().__init__(username,password,name,surname,email)
         self.type = "member"
+        self.fineAmount = 0
+        self.waitingBooks = []
+        self.loanedBooks = []
+        self.totalLoanedBooks = 0

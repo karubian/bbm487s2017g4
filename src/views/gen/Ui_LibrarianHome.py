@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_libraryMainWindow(object):
     def setupUi(self, libraryMainWindow):
         libraryMainWindow.setObjectName("libraryMainWindow")
-        libraryMainWindow.resize(723, 471)
+        libraryMainWindow.resize(1164, 836)
         libraryMainWindow.setStyleSheet("QFrame {\n"
 "border: 3px solid gray;\n"
 "border-radius: 40px;\n"
@@ -19,8 +19,9 @@ class Ui_libraryMainWindow(object):
 "}")
         self.centralwidget = QtWidgets.QWidget(libraryMainWindow)
         self.centralwidget.setObjectName("centralwidget")
+        self.gridLayout_3 = QtWidgets.QGridLayout(self.centralwidget)
+        self.gridLayout_3.setObjectName("gridLayout_3")
         self.librarianMainFrame = QtWidgets.QFrame(self.centralwidget)
-        self.librarianMainFrame.setGeometry(QtCore.QRect(0, 0, 721, 471))
         self.librarianMainFrame.setSizeIncrement(QtCore.QSize(10, 0))
         self.librarianMainFrame.setStyleSheet("QFrame {\n"
 "border: 3px solid gray;\n"
@@ -31,218 +32,234 @@ class Ui_libraryMainWindow(object):
         self.librarianMainFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.librarianMainFrame.setObjectName("librarianMainFrame")
         self.greetingLabel = QtWidgets.QLabel(self.librarianMainFrame)
-        self.greetingLabel.setGeometry(QtCore.QRect(30, 10, 401, 71))
+        self.greetingLabel.setGeometry(QtCore.QRect(30, 50, 611, 81))
         font = QtGui.QFont()
-        font.setPointSize(20)
+        font.setPointSize(-1)
         self.greetingLabel.setFont(font)
         self.greetingLabel.setStyleSheet("QLabel {\n"
 "border: 3px solid rgb(255, 255, 222);\n"
+"font-size:50px;\n"
 "}\n"
 "\n"
 "")
         self.greetingLabel.setWordWrap(False)
         self.greetingLabel.setObjectName("greetingLabel")
         self.dateLabel = QtWidgets.QLabel(self.librarianMainFrame)
-        self.dateLabel.setGeometry(QtCore.QRect(30, 10, 81, 20))
+        self.dateLabel.setGeometry(QtCore.QRect(30, 10, 161, 41))
         self.dateLabel.setStyleSheet("QLabel {\n"
 "border: 3px solid rgb(255, 255, 222);\n"
+"font-size:20px;\n"
 "}")
         self.dateLabel.setObjectName("dateLabel")
         self.tabWidget = QtWidgets.QTabWidget(self.librarianMainFrame)
-        self.tabWidget.setGeometry(QtCore.QRect(20, 80, 681, 361))
+        self.tabWidget.setGeometry(QtCore.QRect(20, 140, 1111, 641))
         self.tabWidget.setStyleSheet("QWidget {\n"
 "border: 2px solid gray;\n"
 "border-radius: 0px;\n"
 "background: rgb(233, 255, 254);\n"
+"font-size:30px;\n"
 "}")
         self.tabWidget.setObjectName("tabWidget")
         self.bookTab = QtWidgets.QWidget()
         self.bookTab.setObjectName("bookTab")
-        self.formLayoutWidget = QtWidgets.QWidget(self.bookTab)
-        self.formLayoutWidget.setGeometry(QtCore.QRect(50, 20, 391, 111))
-        self.formLayoutWidget.setObjectName("formLayoutWidget")
-        self.bookForm = QtWidgets.QFormLayout(self.formLayoutWidget)
-        self.bookForm.setRowWrapPolicy(QtWidgets.QFormLayout.DontWrapRows)
-        self.bookForm.setLabelAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.bookForm.setFormAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTop|QtCore.Qt.AlignTrailing)
-        self.bookForm.setContentsMargins(0, 0, 0, 0)
-        self.bookForm.setObjectName("bookForm")
-        self.titleLineEdit = QtWidgets.QLineEdit(self.formLayoutWidget)
-        self.titleLineEdit.setStyleSheet("QLineEdit {\n"
-"background-color:white;\n"
+        self.bookSearchButton = QtWidgets.QPushButton(self.bookTab)
+        self.bookSearchButton.setGeometry(QtCore.QRect(810, 120, 241, 71))
+        self.bookSearchButton.setStyleSheet("QPushButton {\n"
+"color: white;\n"
+"background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
+"font-size: 30px;\n"
 "}")
-        self.titleLineEdit.setObjectName("titleLineEdit")
-        self.bookForm.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.titleLineEdit)
-        self.iSBNLabel = QtWidgets.QLabel(self.formLayoutWidget)
-        self.iSBNLabel.setStyleSheet("QLabel {\n"
-"background-color:white;\n"
+        self.bookSearchButton.setObjectName("bookSearchButton")
+        self.bookDeleteButton = QtWidgets.QPushButton(self.bookTab)
+        self.bookDeleteButton.setGeometry(QtCore.QRect(810, 350, 241, 71))
+        self.bookDeleteButton.setStyleSheet("QPushButton {\n"
+"color: white;\n"
+"background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
+"font-size: 30px;\n"
 "}")
-        self.iSBNLabel.setObjectName("iSBNLabel")
-        self.bookForm.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.iSBNLabel)
-        self.iSBNLineEdit = QtWidgets.QLineEdit(self.formLayoutWidget)
-        self.iSBNLineEdit.setStyleSheet("QLineEdit {\n"
-"background-color:white;\n"
+        self.bookDeleteButton.setObjectName("bookDeleteButton")
+        self.bookUpdateButton = QtWidgets.QPushButton(self.bookTab)
+        self.bookUpdateButton.setGeometry(QtCore.QRect(810, 440, 241, 81))
+        self.bookUpdateButton.setStyleSheet("QPushButton {\n"
+"color: white;\n"
+"background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
+"font-size: 30px;\n"
 "}")
-        self.iSBNLineEdit.setObjectName("iSBNLineEdit")
-        self.bookForm.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.iSBNLineEdit)
-        self.authorLabel = QtWidgets.QLabel(self.formLayoutWidget)
-        self.authorLabel.setStyleSheet("QLabel {\n"
-"background-color:white;\n"
+        self.bookUpdateButton.setObjectName("bookUpdateButton")
+        self.bookCreateButton = QtWidgets.QPushButton(self.bookTab)
+        self.bookCreateButton.setGeometry(QtCore.QRect(810, 260, 241, 71))
+        self.bookCreateButton.setStyleSheet("QPushButton {\n"
+"color: white;\n"
+"background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
+"font-size: 30px;\n"
 "}")
-        self.authorLabel.setObjectName("authorLabel")
-        self.bookForm.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.authorLabel)
-        self.authorLineEdit = QtWidgets.QLineEdit(self.formLayoutWidget)
-        self.authorLineEdit.setStyleSheet("QLineEdit {\n"
-"background-color:white;\n"
-"}")
-        self.authorLineEdit.setObjectName("authorLineEdit")
-        self.bookForm.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.authorLineEdit)
-        self.categoryLabel = QtWidgets.QLabel(self.formLayoutWidget)
-        self.categoryLabel.setStyleSheet("QLabel {\n"
-"background-color:white;\n"
-"}")
-        self.categoryLabel.setObjectName("categoryLabel")
-        self.bookForm.setWidget(3, QtWidgets.QFormLayout.LabelRole, self.categoryLabel)
-        self.titleLabel = QtWidgets.QLabel(self.formLayoutWidget)
+        self.bookCreateButton.setObjectName("bookCreateButton")
+        self.titleLabel = QtWidgets.QLabel(self.bookTab)
+        self.titleLabel.setGeometry(QtCore.QRect(40, 50, 77, 42))
         self.titleLabel.setStyleSheet("QLabel {\n"
 "background-color:white;\n"
 "}")
         self.titleLabel.setObjectName("titleLabel")
-        self.bookForm.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.titleLabel)
-        self.categoryLineEdit = QtWidgets.QLineEdit(self.formLayoutWidget)
-        self.categoryLineEdit.setStyleSheet("QLineEdit {\n"
+        self.titleLineEdit = QtWidgets.QLineEdit(self.bookTab)
+        self.titleLineEdit.setGeometry(QtCore.QRect(190, 50, 591, 42))
+        self.titleLineEdit.setStyleSheet("QLineEdit {\n"
 "background-color:white;\n"
 "}")
-        self.categoryLineEdit.setObjectName("categoryLineEdit")
-        self.bookForm.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.categoryLineEdit)
-        self.bookSearchButton = QtWidgets.QPushButton(self.bookTab)
-        self.bookSearchButton.setGeometry(QtCore.QRect(470, 20, 141, 31))
-        self.bookSearchButton.setStyleSheet("QPushButton {\n"
+        self.titleLineEdit.setObjectName("titleLineEdit")
+        self.authorLabel = QtWidgets.QLabel(self.bookTab)
+        self.authorLabel.setGeometry(QtCore.QRect(40, 100, 108, 42))
+        self.authorLabel.setStyleSheet("QLabel {\n"
+"background-color:white;\n"
+"}")
+        self.authorLabel.setObjectName("authorLabel")
+        self.authorLineEdit = QtWidgets.QLineEdit(self.bookTab)
+        self.authorLineEdit.setGeometry(QtCore.QRect(190, 100, 591, 42))
+        self.authorLineEdit.setStyleSheet("QLineEdit {\n"
+"background-color:white;\n"
+"}")
+        self.authorLineEdit.setObjectName("authorLineEdit")
+        self.bookTableWidget = QtWidgets.QTableWidget(self.bookTab)
+        self.bookTableWidget.setGeometry(QtCore.QRect(30, 230, 751, 291))
+        self.bookTableWidget.setAlternatingRowColors(False)
+        self.bookTableWidget.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
+        self.bookTableWidget.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
+        self.bookTableWidget.setShowGrid(True)
+        self.bookTableWidget.setGridStyle(QtCore.Qt.SolidLine)
+        self.bookTableWidget.setRowCount(0)
+        self.bookTableWidget.setColumnCount(0)
+        self.bookTableWidget.setObjectName("bookTableWidget")
+        self.bookTableWidget.horizontalHeader().setCascadingSectionResizes(True)
+        self.bookTableWidget.horizontalHeader().setDefaultSectionSize(238)
+        self.bookTableWidget.horizontalHeader().setStretchLastSection(True)
+        self.bookTableWidget.verticalHeader().setCascadingSectionResizes(True)
+        self.bookTableWidget.verticalHeader().setStretchLastSection(False)
+        self.bookResetButton = QtWidgets.QPushButton(self.bookTab)
+        self.bookResetButton.setGeometry(QtCore.QRect(810, 40, 241, 71))
+        self.bookResetButton.setStyleSheet("QPushButton {\n"
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
-"font-size: 20px;\n"
+"font-size: 30px;\n"
 "}")
-        self.bookSearchButton.setObjectName("bookSearchButton")
-        self.bookDeleteButton = QtWidgets.QPushButton(self.bookTab)
-        self.bookDeleteButton.setGeometry(QtCore.QRect(470, 150, 141, 31))
-        self.bookDeleteButton.setStyleSheet("QPushButton {\n"
-"color: white;\n"
-"background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
-"font-size: 20px;\n"
+        self.bookResetButton.setObjectName("bookResetButton")
+        self.yearLineEdit = QtWidgets.QLineEdit(self.bookTab)
+        self.yearLineEdit.setGeometry(QtCore.QRect(190, 150, 591, 42))
+        self.yearLineEdit.setStyleSheet("QLineEdit {\n"
+"background-color:white;\n"
 "}")
-        self.bookDeleteButton.setObjectName("bookDeleteButton")
-        self.bookUpdateButton = QtWidgets.QPushButton(self.bookTab)
-        self.bookUpdateButton.setGeometry(QtCore.QRect(470, 190, 141, 31))
-        self.bookUpdateButton.setStyleSheet("QPushButton {\n"
-"color: white;\n"
-"background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
-"font-size: 20px;\n"
+        self.yearLineEdit.setObjectName("yearLineEdit")
+        self.yearLabel = QtWidgets.QLabel(self.bookTab)
+        self.yearLabel.setGeometry(QtCore.QRect(40, 150, 108, 42))
+        self.yearLabel.setStyleSheet("QLabel {\n"
+"background-color:white;\n"
 "}")
-        self.bookUpdateButton.setObjectName("bookUpdateButton")
-        self.bookScrollArea = QtWidgets.QScrollArea(self.bookTab)
-        self.bookScrollArea.setGeometry(QtCore.QRect(50, 150, 401, 131))
-        self.bookScrollArea.setStyleSheet("QScrollArea {\n"
-"background-color: rgb(85, 255, 255);}")
-        self.bookScrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
-        self.bookScrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.bookScrollArea.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
-        self.bookScrollArea.setWidgetResizable(True)
-        self.bookScrollArea.setObjectName("bookScrollArea")
-        self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 376, 127))
-        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
-        self.bookScrollArea.setWidget(self.scrollAreaWidgetContents)
-        self.bookCreateButton = QtWidgets.QPushButton(self.bookTab)
-        self.bookCreateButton.setGeometry(QtCore.QRect(470, 60, 141, 31))
-        self.bookCreateButton.setStyleSheet("QPushButton {\n"
-"color: white;\n"
-"background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
-"font-size: 20px;\n"
-"}")
-        self.bookCreateButton.setObjectName("bookCreateButton")
+        self.yearLabel.setObjectName("yearLabel")
         self.tabWidget.addTab(self.bookTab, "")
         self.userTab = QtWidgets.QWidget()
         self.userTab.setObjectName("userTab")
-        self.formLayoutWidget_3 = QtWidgets.QWidget(self.userTab)
-        self.formLayoutWidget_3.setGeometry(QtCore.QRect(50, 20, 391, 53))
-        self.formLayoutWidget_3.setObjectName("formLayoutWidget_3")
-        self.userForm = QtWidgets.QFormLayout(self.formLayoutWidget_3)
-        self.userForm.setRowWrapPolicy(QtWidgets.QFormLayout.DontWrapRows)
-        self.userForm.setLabelAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.userForm.setFormAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTop|QtCore.Qt.AlignTrailing)
-        self.userForm.setContentsMargins(0, 0, 0, 0)
-        self.userForm.setObjectName("userForm")
-        self.usernameLabel = QtWidgets.QLabel(self.formLayoutWidget_3)
-        self.usernameLabel.setStyleSheet("QLabel {\n"
-"background-color:white;\n"
+        self.userSearchButton = QtWidgets.QPushButton(self.userTab)
+        self.userSearchButton.setGeometry(QtCore.QRect(810, 120, 241, 71))
+        self.userSearchButton.setStyleSheet("QPushButton {\n"
+"color: white;\n"
+"background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
+"font-size: 30px;\n"
 "}")
-        self.usernameLabel.setObjectName("usernameLabel")
-        self.userForm.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.usernameLabel)
-        self.usernameLineEdit = QtWidgets.QLineEdit(self.formLayoutWidget_3)
+        self.userSearchButton.setObjectName("userSearchButton")
+        self.userUpdateButton = QtWidgets.QPushButton(self.userTab)
+        self.userUpdateButton.setGeometry(QtCore.QRect(810, 440, 241, 81))
+        self.userUpdateButton.setStyleSheet("QPushButton {\n"
+"color: white;\n"
+"background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
+"font-size: 30px;\n"
+"}")
+        self.userUpdateButton.setObjectName("userUpdateButton")
+        self.userDeleteButton = QtWidgets.QPushButton(self.userTab)
+        self.userDeleteButton.setGeometry(QtCore.QRect(810, 350, 241, 71))
+        self.userDeleteButton.setStyleSheet("QPushButton {\n"
+"color: white;\n"
+"background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
+"font-size: 30px;\n"
+"}")
+        self.userDeleteButton.setObjectName("userDeleteButton")
+        self.userCreateButton = QtWidgets.QPushButton(self.userTab)
+        self.userCreateButton.setGeometry(QtCore.QRect(810, 260, 241, 71))
+        self.userCreateButton.setStyleSheet("QPushButton {\n"
+"color: white;\n"
+"background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
+"font-size: 30px;\n"
+"}")
+        self.userCreateButton.setObjectName("userCreateButton")
+        self.usernameLineEdit = QtWidgets.QLineEdit(self.userTab)
+        self.usernameLineEdit.setGeometry(QtCore.QRect(200, 50, 581, 42))
         self.usernameLineEdit.setStyleSheet("QLineEdit {\n"
 "background-color:white;\n"
 "}")
         self.usernameLineEdit.setObjectName("usernameLineEdit")
-        self.userForm.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.usernameLineEdit)
-        self.idLabel = QtWidgets.QLabel(self.formLayoutWidget_3)
-        self.idLabel.setStyleSheet("QLabel {\n"
+        self.nameLineEdit = QtWidgets.QLineEdit(self.userTab)
+        self.nameLineEdit.setGeometry(QtCore.QRect(200, 100, 581, 42))
+        self.nameLineEdit.setStyleSheet("QLineEdit {\n"
 "background-color:white;\n"
 "}")
-        self.idLabel.setObjectName("idLabel")
-        self.userForm.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.idLabel)
-        self.idLineEdit = QtWidgets.QLineEdit(self.formLayoutWidget_3)
-        self.idLineEdit.setStyleSheet("QLineEdit {\n"
+        self.nameLineEdit.setObjectName("nameLineEdit")
+        self.usernameLabel = QtWidgets.QLabel(self.userTab)
+        self.usernameLabel.setGeometry(QtCore.QRect(30, 50, 153, 40))
+        self.usernameLabel.setStyleSheet("QLabel {\n"
 "background-color:white;\n"
 "}")
-        self.idLineEdit.setObjectName("idLineEdit")
-        self.userForm.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.idLineEdit)
-        self.userSearchButton = QtWidgets.QPushButton(self.userTab)
-        self.userSearchButton.setGeometry(QtCore.QRect(470, 20, 141, 31))
-        self.userSearchButton.setStyleSheet("QPushButton {\n"
+        self.usernameLabel.setObjectName("usernameLabel")
+        self.nameLabel = QtWidgets.QLabel(self.userTab)
+        self.nameLabel.setGeometry(QtCore.QRect(30, 100, 119, 40))
+        self.nameLabel.setStyleSheet("QLabel {\n"
+"background-color:white;\n"
+"}")
+        self.nameLabel.setObjectName("nameLabel")
+        self.surnameLabel = QtWidgets.QLabel(self.userTab)
+        self.surnameLabel.setGeometry(QtCore.QRect(30, 150, 141, 40))
+        self.surnameLabel.setStyleSheet("QLabel {\n"
+"background-color:white;\n"
+"}")
+        self.surnameLabel.setObjectName("surnameLabel")
+        self.surnameLineEdit = QtWidgets.QLineEdit(self.userTab)
+        self.surnameLineEdit.setGeometry(QtCore.QRect(200, 150, 581, 42))
+        self.surnameLineEdit.setStyleSheet("QLineEdit {\n"
+"background-color:white;\n"
+"}")
+        self.surnameLineEdit.setObjectName("surnameLineEdit")
+        self.userTableWidget = QtWidgets.QTableWidget(self.userTab)
+        self.userTableWidget.setGeometry(QtCore.QRect(30, 230, 751, 291))
+        self.userTableWidget.setAlternatingRowColors(False)
+        self.userTableWidget.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
+        self.userTableWidget.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
+        self.userTableWidget.setShowGrid(True)
+        self.userTableWidget.setGridStyle(QtCore.Qt.SolidLine)
+        self.userTableWidget.setRowCount(0)
+        self.userTableWidget.setColumnCount(0)
+        self.userTableWidget.setObjectName("userTableWidget")
+        self.userTableWidget.horizontalHeader().setCascadingSectionResizes(True)
+        self.userTableWidget.horizontalHeader().setDefaultSectionSize(238)
+        self.userTableWidget.horizontalHeader().setStretchLastSection(True)
+        self.userTableWidget.verticalHeader().setCascadingSectionResizes(True)
+        self.userTableWidget.verticalHeader().setStretchLastSection(False)
+        self.userResetButton = QtWidgets.QPushButton(self.userTab)
+        self.userResetButton.setGeometry(QtCore.QRect(810, 40, 241, 71))
+        self.userResetButton.setStyleSheet("QPushButton {\n"
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
-"font-size: 20px;\n"
+"font-size: 30px;\n"
 "}")
-        self.userSearchButton.setObjectName("userSearchButton")
-        self.userUpdateButton = QtWidgets.QPushButton(self.userTab)
-        self.userUpdateButton.setGeometry(QtCore.QRect(470, 190, 141, 31))
-        self.userUpdateButton.setStyleSheet("QPushButton {\n"
-"color: white;\n"
-"background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
-"font-size: 20px;\n"
-"}")
-        self.userUpdateButton.setObjectName("userUpdateButton")
-        self.userDeleteButton = QtWidgets.QPushButton(self.userTab)
-        self.userDeleteButton.setGeometry(QtCore.QRect(470, 150, 141, 31))
-        self.userDeleteButton.setStyleSheet("QPushButton {\n"
-"color: white;\n"
-"background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
-"font-size: 20px;\n"
-"}")
-        self.userDeleteButton.setObjectName("userDeleteButton")
-        self.userCreateButton = QtWidgets.QPushButton(self.userTab)
-        self.userCreateButton.setGeometry(QtCore.QRect(470, 60, 141, 31))
-        self.userCreateButton.setStyleSheet("QPushButton {\n"
-"color: white;\n"
-"background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
-"font-size: 20px;\n"
-"}")
-        self.userCreateButton.setObjectName("userCreateButton")
-        self.userListView = QtWidgets.QListView(self.userTab)
-        self.userListView.setGeometry(QtCore.QRect(50, 120, 391, 121))
-        self.userListView.setObjectName("userListView")
+        self.userResetButton.setObjectName("userResetButton")
         self.tabWidget.addTab(self.userTab, "")
         self.logoutButton = QtWidgets.QPushButton(self.librarianMainFrame)
-        self.logoutButton.setGeometry(QtCore.QRect(520, 20, 171, 41))
+        self.logoutButton.setGeometry(QtCore.QRect(830, 40, 271, 81))
         font = QtGui.QFont()
         font.setPointSize(-1)
         self.logoutButton.setFont(font)
         self.logoutButton.setStyleSheet("QPushButton {\n"
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
-"font-size: 20px;\n"
+"font-size: 30px;\n"
 "}")
         self.logoutButton.setObjectName("logoutButton")
+        self.gridLayout_3.addWidget(self.librarianMainFrame, 0, 0, 1, 1)
         libraryMainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(libraryMainWindow)
@@ -255,21 +272,25 @@ class Ui_libraryMainWindow(object):
         self.librarianMainFrame.setWhatsThis(_translate("libraryMainWindow", "<html><head/><body><p>BUrak</p><p><br/></p></body></html>"))
         self.greetingLabel.setText(_translate("libraryMainWindow", "Welcome back, John Doe"))
         self.dateLabel.setText(_translate("libraryMainWindow", "10.05.2017"))
-        self.iSBNLabel.setText(_translate("libraryMainWindow", "ISBN"))
-        self.authorLabel.setText(_translate("libraryMainWindow", "Author"))
-        self.categoryLabel.setText(_translate("libraryMainWindow", "Category"))
-        self.titleLabel.setText(_translate("libraryMainWindow", "Title"))
         self.bookSearchButton.setText(_translate("libraryMainWindow", "Search"))
         self.bookDeleteButton.setText(_translate("libraryMainWindow", "Delete"))
         self.bookUpdateButton.setText(_translate("libraryMainWindow", "Update"))
         self.bookCreateButton.setText(_translate("libraryMainWindow", "Create"))
+        self.titleLabel.setText(_translate("libraryMainWindow", "Title"))
+        self.authorLabel.setText(_translate("libraryMainWindow", "Author"))
+        self.bookTableWidget.setSortingEnabled(True)
+        self.bookResetButton.setText(_translate("libraryMainWindow", "Reset"))
+        self.yearLabel.setText(_translate("libraryMainWindow", "Year"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.bookTab), _translate("libraryMainWindow", "Manipulate Books"))
-        self.usernameLabel.setText(_translate("libraryMainWindow", "Username"))
-        self.idLabel.setText(_translate("libraryMainWindow", "User ID"))
         self.userSearchButton.setText(_translate("libraryMainWindow", "Search"))
         self.userUpdateButton.setText(_translate("libraryMainWindow", "Update"))
         self.userDeleteButton.setText(_translate("libraryMainWindow", "Delete"))
         self.userCreateButton.setText(_translate("libraryMainWindow", "Create"))
+        self.usernameLabel.setText(_translate("libraryMainWindow", "Username"))
+        self.nameLabel.setText(_translate("libraryMainWindow", "Name"))
+        self.surnameLabel.setText(_translate("libraryMainWindow", "Surname"))
+        self.userTableWidget.setSortingEnabled(True)
+        self.userResetButton.setText(_translate("libraryMainWindow", "Reset"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.userTab), _translate("libraryMainWindow", "Manipulate Users"))
         self.logoutButton.setText(_translate("libraryMainWindow", "Logout"))
 
