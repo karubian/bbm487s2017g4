@@ -27,7 +27,7 @@ class LoginView(Ui_Login):
 
     def user_login(self):
         user, password = self.get_login_info()
-        if self.userController.client.authorization(user, password):
+        if self.userController.authorization(user, password):
             current_user = self.userController.get_user_by_username(user)
             if current_user.type is "member":
                 self.login.hide()

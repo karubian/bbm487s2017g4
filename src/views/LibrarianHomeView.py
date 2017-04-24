@@ -35,6 +35,7 @@ class LibrarianHomeView(Ui_libraryMainWindow):
         self.customize_scene()
         self.current_user_queries = ["", "", ""]
         self.current_book_queries = ["", "", ""]
+        self.set_button_effects()
 
         self.list_users()
         self.list_books()
@@ -56,21 +57,23 @@ class LibrarianHomeView(Ui_libraryMainWindow):
 
     def delete_selected_user(self):
         selected_row = self.ui.userTableWidget.currentRow()
-        selected_user = self.ui.userTableWidget.item(selected_row, 2).text()
-        self.confirm.confirm_flag = 0
-        self.confirm.confirmScreen.exec_()
-        if self.confirm.confirm_flag is 2:
-            self.userController.delete_one_user(selected_user)
-        self.list_users()
+        if selected_row > -1:
+            selected_user = self.ui.userTableWidget.item(selected_row, 2).text()
+            self.confirm.confirm_flag = 0
+            self.confirm.confirmScreen.exec_()
+            if self.confirm.confirm_flag is 2:
+                self.userController.delete_one_user(selected_user)
+            self.list_users()
 
     def delete_selected_book(self):
         selected_row = self.ui.bookTableWidget.currentRow()
-        selected_book = self.ui.bookTableWidget.item(selected_row, 0).text()
-        self.confirm.confirm_flag = 0
-        self.confirm.confirmScreen.exec_()
-        if self.confirm.confirm_flag is 2:
-            self.bookController.delete_one_book(selected_book)
-        self.list_books()
+        if selected_row > -1:
+            selected_book = self.ui.bookTableWidget.item(selected_row, 0).text()
+            self.confirm.confirm_flag = 0
+            self.confirm.confirmScreen.exec_()
+            if self.confirm.confirm_flag is 2:
+                self.bookController.delete_one_book(selected_book)
+            self.list_books()
 
     def list_users(self):
         query_result = self.userController.search_users(self.current_user_queries[0], self.current_user_queries[1],
@@ -111,21 +114,23 @@ class LibrarianHomeView(Ui_libraryMainWindow):
 
     def update_user_form(self):
         selected_row = self.ui.userTableWidget.currentRow()
-        selected_user = self.ui.userTableWidget.item(selected_row, 2).text()
-        self.userRegisterScreen.type = 1
-        self.userRegisterScreen.currentUser = self.userController.get_user_by_username(selected_user)
-        self.userRegisterScreen.prepare_update(self.userRegisterScreen.currentUser)
-        self.userRegisterScreen.userRegisterFormScreen.exec_()
-        self.list_users()
+        if selected_row > -1:
+            selected_user = self.ui.userTableWidget.item(selected_row, 2).text()
+            self.userRegisterScreen.type = 1
+            self.userRegisterScreen.currentUser = self.userController.get_user_by_username(selected_user)
+            self.userRegisterScreen.prepare_update(self.userRegisterScreen.currentUser)
+            self.userRegisterScreen.userRegisterFormScreen.exec_()
+            self.list_users()
 
     def update_book_form(self):
         selected_row = self.ui.bookTableWidget.currentRow()
-        selected_book = self.ui.bookTableWidget.item(selected_row, 0).text()
-        self.bookRegisterScreen.type = 1
-        self.bookRegisterScreen.currentBook = self.bookController.get_book_by_title(selected_book)
-        self.bookRegisterScreen.prepare_update(self.bookRegisterScreen.currentBook)
-        self.bookRegisterScreen.bookRegisterFormScreen.exec_()
-        self.list_books()
+        if selected_row > -1:
+            selected_book = self.ui.bookTableWidget.item(selected_row, 0).text()
+            self.bookRegisterScreen.type = 1
+            self.bookRegisterScreen.currentBook = self.bookController.get_book_by_title(selected_book)
+            self.bookRegisterScreen.prepare_update(self.bookRegisterScreen.currentBook)
+            self.bookRegisterScreen.bookRegisterFormScreen.exec_()
+            self.list_books()
 
     def register_user_form(self):
         self.userRegisterScreen.type = 0
@@ -153,10 +158,46 @@ class LibrarianHomeView(Ui_libraryMainWindow):
         self.current_book_queries = [search_title, search_author, search_year]
         self.list_books()
 
+    def released_color_change(self):
+        self.librarianHome.sender().setStyleSheet("QPushButton {\n"
+                                                  "color: white;\n"
+                                                  "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
+                                                  "font-size: 30px;\n"
+                                                  "}")
+
+    def pressed_color_change(self):
+        self.librarianHome.sender().setStyleSheet("QPushButton {\n"
+                                                  "color: white;\n"
+                                                  "background-color: red;\n"
+                                                  "font-size: 30px;\n"
+                                                  "}")
+
+    def set_button_effects(self):
+        self.ui.logoutButton.released.connect(self.released_color_change)
+        self.ui.logoutButton.pressed.connect(self.pressed_color_change)
+        self.ui.userSearchButton.released.connect(self.released_color_change)
+        self.ui.userSearchButton.pressed.connect(self.pressed_color_change)
+        self.ui.userCreateButton.released.connect(self.released_color_change)
+        self.ui.userCreateButton.pressed.connect(self.pressed_color_change)
+        self.ui.userDeleteButton.released.connect(self.released_color_change)
+        self.ui.userDeleteButton.pressed.connect(self.pressed_color_change)
+        self.ui.userUpdateButton.released.connect(self.released_color_change)
+        self.ui.userUpdateButton.pressed.connect(self.pressed_color_change)
+        self.ui.bookSearchButton.released.connect(self.released_color_change)
+        self.ui.bookSearchButton.pressed.connect(self.pressed_color_change)
+        self.ui.bookDeleteButton.released.connect(self.released_color_change)
+        self.ui.bookDeleteButton.pressed.connect(self.pressed_color_change)
+        self.ui.bookCreateButton.released.connect(self.released_color_change)
+        self.ui.bookCreateButton.pressed.connect(self.pressed_color_change)
+        self.ui.bookResetButton.released.connect(self.released_color_change)
+        self.ui.bookResetButton.pressed.connect(self.pressed_color_change)
+        self.ui.bookUpdateButton.released.connect(self.released_color_change)
+        self.ui.bookUpdateButton.pressed.connect(self.pressed_color_change)
+        self.ui.userResetButton.released.connect(self.released_color_change)
+        self.ui.userResetButton.pressed.connect(self.pressed_color_change)
 
 
-
-        # def delete_user_operation(self):
+    # def delete_user_operation(self):
         #     items = self.ui.userListView.selectedIndexes()
         #     aa = self.ui.userListView.model().itemData(self.ui.userListView.selectedIndexes()[0])
         #     print(aa[0])

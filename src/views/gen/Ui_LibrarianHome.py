@@ -120,6 +120,7 @@ class Ui_libraryMainWindow(object):
         self.authorLineEdit.setObjectName("authorLineEdit")
         self.bookTableWidget = QtWidgets.QTableWidget(self.bookTab)
         self.bookTableWidget.setGeometry(QtCore.QRect(30, 230, 751, 291))
+        self.bookTableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.bookTableWidget.setAlternatingRowColors(False)
         self.bookTableWidget.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
         self.bookTableWidget.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
@@ -226,6 +227,7 @@ class Ui_libraryMainWindow(object):
         self.surnameLineEdit.setObjectName("surnameLineEdit")
         self.userTableWidget = QtWidgets.QTableWidget(self.userTab)
         self.userTableWidget.setGeometry(QtCore.QRect(30, 230, 751, 291))
+        self.userTableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.userTableWidget.setAlternatingRowColors(False)
         self.userTableWidget.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
         self.userTableWidget.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
@@ -259,11 +261,21 @@ class Ui_libraryMainWindow(object):
 "font-size: 30px;\n"
 "}")
         self.logoutButton.setObjectName("logoutButton")
+        self.label_2 = QtWidgets.QLabel(self.librarianMainFrame)
+        self.label_2.setGeometry(QtCore.QRect(840, 50, 71, 61))
+        self.label_2.setStyleSheet("QLabel {\n"
+"border:none;\n"
+"background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
+"}")
+        self.label_2.setText("")
+        self.label_2.setPixmap(QtGui.QPixmap("../project/resources/logout.png"))
+        self.label_2.setScaledContents(True)
+        self.label_2.setObjectName("label_2")
         self.gridLayout_3.addWidget(self.librarianMainFrame, 0, 0, 1, 1)
         libraryMainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(libraryMainWindow)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(libraryMainWindow)
 
     def retranslateUi(self, libraryMainWindow):

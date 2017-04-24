@@ -10,11 +10,6 @@ class DbClient:
         self.client = pymongo.MongoClient(self.uri)
         self.db = self.client.bbm487_library
 
-    def authorization(self, username, passkey):
-        if self.db.users.find_one({"username": username, "password": passkey}) is not None:
-            return 1
-        return 0
-
     def find_user_by_username(self, username):
         new_user = None
         found_user = self.db.users.find_one({"username": username})
@@ -36,6 +31,9 @@ class DbClient:
 
     def delete_user(self, username):
         self.db.users.delete_one({'username': username})
+
+    def delete_loan_record(self, book_id):
+        self.db.loans.delete_one({'book_id': book_id})
 
     def delete_book(self, title):
         self.db.books.delete_one({'title': title})
@@ -68,12 +66,35 @@ class DbClient:
                     "fineAmount": new_user.fineAmount,
                     "loanedBooks": new_user.loanedBooks,
                     "email": new_user.email_address,
-                    "totalLoanedBooks": new_user.totalLoanedBooks
+                    "totalLoanedBooks": new_user.totalLoanedBooks,
+                    "lastLoanedBook":new_user.lastLoanedBook
                 }
             )
             return 1
         except:
             return None
+
+    def add_loan_record(self, new_loan):
+        try:
+            result = self.db.loans.insert_one(
+                {
+                    "book_id": new_loan.book_id,
+                    "user_id": new_loan.user_id,
+                    "startDate": new_loan.startDate,
+                    "returnDate": new_loan.returnDate,
+                    "currentFine": new_loan.currentFine,
+                    "status": new_loan.status
+                }
+            )
+            return 1
+        except:
+            return None
+
+    def find_loan_record(self, book_id):
+        found_loan = self.db.loans.find_one({"book_id": book_id})
+        if found_loan is None:
+            return 0
+        return found_loan
 
     def update_member_db(self, newUserInfo, userToUpdate):
         try:
@@ -103,7 +124,8 @@ class DbClient:
                 "fineAmount": updated_member.fineAmount,
                 "loanedBooks": updated_member.loanedBooks,
                 "email": updated_member.email_address,
-                "totalLoanedBooks": updated_member.totalLoanedBooks
+                "totalLoanedBooks": updated_member.totalLoanedBooks,
+                "lastLoanedBook":updated_member.lastLoanedBook
             }
             })
             return 1

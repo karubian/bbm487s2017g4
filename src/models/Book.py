@@ -3,7 +3,7 @@ class Book:
         self.title = title
         self.author = author
         self.publishedYear = publishedYear
-        self.isAvailable = False
+        self.isAvailable = True
         self.waitingList = []
         self.id= None
         self.description = None

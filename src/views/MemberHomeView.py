@@ -2,6 +2,7 @@ from PyQt5 import QtWidgets, QtGui
 from views.gen.Ui_MemberHome import Ui_memberMainWindow
 from controllers.UserController import UserController
 from controllers.BookController import BookController
+from controllers.LoanController import LoanController
 import views.ConfirmView as confirmView
 import views.ErrorView as errorView
 
@@ -16,17 +17,20 @@ class MemberHomeView(Ui_memberMainWindow):
         self.error = errorView.ErrorView()
         self.userController = UserController()
         self.bookController = BookController()
+        self.loanController = LoanController()
         self.ui.searchButton.clicked.connect(self.search_books)
         self.ui.waitingListButton.clicked.connect(self.add_to_waiting_list)
         self.ui.checkoutButton.clicked.connect(self.checkout_book)
         self.ui.cancelSelected.clicked.connect(self.cancel_waiting)
+        self.ui.returnBookButton.clicked.connect(self.return_operation)
         self.currentUser = user
-        self.customize_scene();
+        self.prepare_scene()
         self.current_book_queries = ["", "", ""]
-        self.list_books()
-        self.list_user_waiting_list()
+        self.update_lists()
+        self.update_scene()
+        self.set_button_effects()
 
-    def customize_scene(self):
+    def prepare_scene(self):
         self.ui.greetingLabel.setText("Hi, " + str(self.currentUser.name) + " " + str(self.currentUser.surname))
         self.ui.searchBookWidget.setColumnCount(3)
         self.ui.viewBookWidget.setColumnCount(3)
@@ -34,6 +38,12 @@ class MemberHomeView(Ui_memberMainWindow):
         self.ui.searchBookWidget.setHorizontalHeaderLabels(["Title", "Author", "Published Year"])
         self.ui.viewBookWidget.setHorizontalHeaderLabels(["Title", "Author", "Published Year"])
         self.ui.waitingListWidget.setHorizontalHeaderLabels(["Title", "Author", "Published Year"])
+
+    def update_scene(self):
+        self.ui.lastBookLabel.setText("Last Loaned Book : " + self.currentUser.lastLoanedBook)
+        self.ui.fineLabel.setText("Current Fine Amount : $" + str(self.currentUser.fineAmount))
+        self.ui.totalBooksLabel.setText("Total Loaned Books : " + str(self.currentUser.totalLoanedBooks))
+
 
     def logout(self):
         import views.LoginView as LoginView
@@ -46,7 +56,7 @@ class MemberHomeView(Ui_memberMainWindow):
 
     def reset_book_filters(self):
         self.current_book_queries = ["", "", ""]
-        self.list_books()
+        self.update_lists()
 
     def list_books(self):
         query_result = self.bookController.search_books(self.current_book_queries[0], self.current_book_queries[1],
@@ -60,9 +70,9 @@ class MemberHomeView(Ui_memberMainWindow):
             self.ui.searchBookWidget.setItem(i, 1, QtWidgets.QTableWidgetItem(record["author"]))
             self.ui.searchBookWidget.setItem(i, 2, QtWidgets.QTableWidgetItem(record["year"]))
             if record["isAvailable"] is False:
-                self.ui.searchBookWidget.item(i, 0).setBackground(QtGui.QColor(100, 50, 200))
-                self.ui.searchBookWidget.item(i, 1).setBackground(QtGui.QColor(100, 50, 200))
-                self.ui.searchBookWidget.item(i, 2).setBackground(QtGui.QColor(100, 50, 200))
+                self.ui.searchBookWidget.item(i, 0).setBackground(QtGui.QColor(66, 244, 241))
+                self.ui.searchBookWidget.item(i, 1).setBackground(QtGui.QColor(66, 244, 241))
+                self.ui.searchBookWidget.item(i, 2).setBackground(QtGui.QColor(66, 244, 241))
             i = i + 1
         self.show()
 
@@ -71,32 +81,46 @@ class MemberHomeView(Ui_memberMainWindow):
         search_author = self.ui.authorLineEdit.text()
         search_year = self.ui.yearLineEdit.text()
         self.current_book_queries = [search_title, search_author, search_year]
-        self.list_books()
+        self.update_lists()
 
     def checkout_book(self):
         selected_row = self.ui.searchBookWidget.currentRow()
-        selected_book_title = self.ui.searchBookWidget.item(selected_row, 0).text()
-        selected_book = self.bookController.get_book_by_title(selected_book_title)
-        if selected_book.isAvailable is False:
-            self.error.set_error_text("You can't checkout an unavailable book.")
-            self.error.errorScreen.exec_()
+        if selected_row > -1:
+            selected_book_title = self.ui.searchBookWidget.item(selected_row, 0).text()
+            selected_book = self.bookController.get_book_by_title(selected_book_title)
+            if selected_book.isAvailable is False:
+                self.error.set_error_text("You can't checkout an unavailable book.")
+                self.error.errorScreen.exec_()
+            else:
+                self.loanController.checkout_book(self.currentUser, selected_book)
+                self.update_lists()
+                self.update_scene()
 
     def add_to_waiting_list(self):
         selected_row = self.ui.searchBookWidget.currentRow()
-        selected_book_title = self.ui.searchBookWidget.item(selected_row, 0).text()
-        selected_book = self.bookController.get_book_by_title(selected_book_title)
+        if selected_row > -1:
+            selected_book_title = self.ui.searchBookWidget.item(selected_row, 0).text()
+            selected_book = self.bookController.get_book_by_title(selected_book_title)
 
-        if selected_book.isAvailable is True:
-            self.error.set_error_text("You can't add an available book to your waiting list.")
-            self.error.errorScreen.exec_()
-        elif selected_book.isAvailable is False:
-            if selected_book.id not in self.currentUser.waitingBooks:
-                self.currentUser.waitingBooks.append(selected_book.id)
-            if self.currentUser.id not in selected_book.waitingList:
-                selected_book.waitingList.append(self.currentUser.id)
-            self.userController.update_member_attributes(self.currentUser)
-            self.bookController.update_book_attributes(selected_book)
-            self.list_user_waiting_list()
+            if selected_book.isAvailable is True:
+                self.error.set_error_text("You can't add an available book to your waiting list.")
+                self.error.errorScreen.exec_()
+            elif selected_book.id in self.currentUser.loanedBooks:
+                self.error.set_error_text("You already loaned this book.")
+                self.error.errorScreen.exec_()
+            elif selected_book.isAvailable is False:
+                if selected_book.id not in self.currentUser.waitingBooks:
+                    self.currentUser.waitingBooks.append(selected_book.id)
+                if self.currentUser.id not in selected_book.waitingList:
+                    selected_book.waitingList.append(self.currentUser.id)
+                self.userController.update_member_attributes(self.currentUser)
+                self.bookController.update_book_attributes(selected_book)
+                self.update_lists()
+
+    def update_lists(self):
+        self.list_user_waiting_list()
+        self.list_books()
+        self.list_loaned_books()
 
     def list_user_waiting_list(self):
         i = 0
@@ -108,19 +132,90 @@ class MemberHomeView(Ui_memberMainWindow):
             self.ui.waitingListWidget.setItem(i, 0, QtWidgets.QTableWidgetItem(waited_book.title))
             self.ui.waitingListWidget.setItem(i, 1, QtWidgets.QTableWidgetItem(waited_book.author))
             self.ui.waitingListWidget.setItem(i, 2, QtWidgets.QTableWidgetItem(waited_book.publishedYear))
-            i = i+1
+            i = i + 1
+        self.show()
+
+    def list_loaned_books(self):
+        i = 0
+        current_row_count = len(self.currentUser.loanedBooks)
+        self.ui.viewBookWidget.setRowCount(current_row_count)
+
+        for record in self.currentUser.loanedBooks:
+            loaned_book = self.bookController.get_book_by_id(record)
+            self.ui.viewBookWidget.setItem(i, 0, QtWidgets.QTableWidgetItem(loaned_book.title))
+            self.ui.viewBookWidget.setItem(i, 1, QtWidgets.QTableWidgetItem(loaned_book.author))
+            self.ui.viewBookWidget.setItem(i, 2, QtWidgets.QTableWidgetItem(loaned_book.publishedYear))
+            i = i + 1
         self.show()
 
     def cancel_waiting(self):
         selected_row = self.ui.waitingListWidget.currentRow()
-        selected_book_title = self.ui.waitingListWidget.item(selected_row, 0).text()
-        selected_book = self.bookController.get_book_by_title(selected_book_title)
-        self.confirm.confirm_flag = 0
-        self.confirm.set_confirm_text("Are you sure you want to cancel waiting for this book?")
-        self.confirm.confirmScreen.exec_()
-        if self.confirm.confirm_flag is 2:
-            self.currentUser.waitingBooks.remove(selected_book.id)
-            selected_book.waitingList.remove(self.currentUser.id)
-            self.userController.update_member_attributes(self.currentUser)
-            self.bookController.update_book_attributes(selected_book)
-        self.list_user_waiting_list()
+        if selected_row > -1:
+            selected_book_title = self.ui.waitingListWidget.item(selected_row, 0).text()
+            selected_book = self.bookController.get_book_by_title(selected_book_title)
+            self.confirm.confirm_flag = 0
+            self.confirm.set_confirm_text("Are you sure you want to cancel waiting for this book?")
+            self.confirm.confirmScreen.exec_()
+            if self.confirm.confirm_flag is 2:
+                self.currentUser.waitingBooks.remove(selected_book.id)
+                selected_book.waitingList.remove(self.currentUser.id)
+                self.userController.update_member_attributes(self.currentUser)
+                self.bookController.update_book_attributes(selected_book)
+        self.update_lists()
+
+    def return_operation(self):
+        selected_row = self.ui.viewBookWidget.currentRow()
+        if selected_row > -1:
+            selected_book_title = self.ui.viewBookWidget.item(selected_row, 0).text()
+            selected_book = self.bookController.get_book_by_title(selected_book_title)
+            self.confirm.confirm_flag = 0
+            self.confirm.set_confirm_text("Are you sure you want to return this book?")
+            self.confirm.confirmScreen.exec_()
+            if self.confirm.confirm_flag is 2:
+                self.loanController.return_book(self.currentUser, selected_book)
+                self.update_lists()
+                self.update_scene()
+
+    def set_button_effects(self):
+        self.ui.returnBookButton.released.connect(self.released_color_change)
+        self.ui.returnBookButton.pressed.connect(self.pressed_color_change)
+        self.ui.searchButton.released.connect(self.released_color_change)
+        self.ui.searchButton.pressed.connect(self.pressed_color_change)
+        self.ui.cancelSelected.released.connect(self.released_color_change)
+        self.ui.cancelSelected.pressed.connect(self.pressed_color_change)
+        self.ui.checkoutButton.released.connect(self.released_color_change)
+        self.ui.checkoutButton.pressed.connect(self.pressed_color_change)
+        self.ui.logoutButton.released.connect(self.released_color_change)
+        self.ui.logoutButton.pressed.connect(self.pressed_color_change)
+        self.ui.waitingListButton.released.connect(self.released_color_change)
+        self.ui.waitingListButton.pressed.connect(self.pressed_color_change)
+        self.ui.payFineButton.released.connect(self.released_color_change)
+        self.ui.payFineButton.pressed.connect(self.pressed_color_change)
+
+    def released_color_change(self):
+        if self.memberHome.sender().text() == 'Add To Waiting List':
+            self.memberHome.sender().setStyleSheet("QPushButton {\n"
+                                                   "color: white;\n"
+                                                   "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
+                                                   "font-size: 20px;\n"
+                                                   "}")
+        else:
+            self.memberHome.sender().setStyleSheet("QPushButton {\n"
+                                                   "color: white;\n"
+                                                   "background-color:  QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
+                                                   "font-size: 30px;\n"
+                                                   "}")
+
+    def pressed_color_change(self):
+        if self.memberHome.sender().text() == 'Add To Waiting List':
+            self.memberHome.sender().setStyleSheet("QPushButton {\n"
+                                                   "color: white;\n"
+                                                   "background-color: red;\n"
+                                                   "font-size: 20px;\n"
+                                                   "}")
+        else:
+            self.memberHome.sender().setStyleSheet("QPushButton {\n"
+                                                   "color: white;\n"
+                                                   "background-color:red;\n"
+                                                   "font-size: 30px;\n"
+                                                   "}")

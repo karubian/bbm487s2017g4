@@ -17,12 +17,18 @@ class UserController:
             new_user.fineAmount = found_user_info["fineAmount"]
             new_user.loanedBooks = found_user_info["loanedBooks"]
             new_user.totalLoanedBooks = found_user_info["totalLoanedBooks"]
+            new_user.lastLoanedBook = found_user_info["lastLoanedBook"]
         elif found_user_info["type"] == "librarian":
             new_user = Librarian(found_user_info["username"], found_user_info["password"], found_user_info["name"],
                                  found_user_info["surname"], found_user_info["email"])
         new_user.id = found_user_info["_id"]
 
         return new_user
+
+    def authorization(self, username, passkey):
+        if self.client.db.users.find_one({"username": username, "password": passkey}) is not None:
+            return 1
+        return 0
 
     def update_member_attributes(self, user):
         self.client.update_member_attributes_db(user)
