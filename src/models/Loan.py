@@ -5,12 +5,12 @@ class Loan:
     def __init__(self, user, book):
         self.book_id = book
         self.user_id = user
-        self.startDate = datetime.datetime.now()
+        self.startDate = datetime.datetime.now() - datetime.timedelta(days=50)
+        # self.startDate = datetime.datetime.now()
         self.returnDate = self.startDate + datetime.timedelta(days=40)
         self.currentFine = 0
         self.status = 0
-
-    def calculate_fine(self,elapsed_days):
+    def calculate_fine(self, elapsed_days):
         self.currentFine = 5 + (elapsed_days - 40) * 1.5
 
     def check_status(self):

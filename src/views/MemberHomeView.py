@@ -5,6 +5,7 @@ from controllers.BookController import BookController
 from controllers.LoanController import LoanController
 import views.ConfirmView as confirmView
 import views.ErrorView as errorView
+import datetime
 
 
 class MemberHomeView(Ui_memberMainWindow):
@@ -32,6 +33,7 @@ class MemberHomeView(Ui_memberMainWindow):
 
     def prepare_scene(self):
         self.ui.greetingLabel.setText("Hi, " + str(self.currentUser.name) + " " + str(self.currentUser.surname))
+        self.ui.dateLabel.setText(datetime.datetime.now().strftime("%Y-%m-%d"))
         self.ui.searchBookWidget.setColumnCount(3)
         self.ui.viewBookWidget.setColumnCount(3)
         self.ui.waitingListWidget.setColumnCount(3)

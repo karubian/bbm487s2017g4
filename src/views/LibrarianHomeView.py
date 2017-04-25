@@ -5,6 +5,7 @@ from controllers.BookController import BookController
 import views.ConfirmView as confirmView
 import views.UserRegisterFormView as userRegisterFormView
 import views.BookRegisterFormView as bookRegisterFormView
+import datetime
 
 
 class LibrarianHomeView(Ui_libraryMainWindow):
@@ -42,6 +43,7 @@ class LibrarianHomeView(Ui_libraryMainWindow):
 
     def customize_scene(self):
         self.ui.greetingLabel.setText("Hi, " + str(self.currentUser.name) + " " + str(self.currentUser.surname))
+        self.ui.dateLabel.setText(datetime.datetime.now().strftime("%Y-%m-%d"))
         self.ui.userTableWidget.setColumnCount(3)
         self.ui.bookTableWidget.setColumnCount(3)
         self.ui.userTableWidget.setHorizontalHeaderLabels(["Name", "Surname", "Username"])
@@ -100,6 +102,10 @@ class LibrarianHomeView(Ui_libraryMainWindow):
             self.ui.bookTableWidget.setItem(i, 0, QtWidgets.QTableWidgetItem(record["title"]))
             self.ui.bookTableWidget.setItem(i, 1, QtWidgets.QTableWidgetItem(record["author"]))
             self.ui.bookTableWidget.setItem(i, 2, QtWidgets.QTableWidgetItem(record["year"]))
+            if record["isAvailable"] is False:
+                self.ui.bookTableWidget.item(i, 0).setBackground(QtGui.QColor(66, 244, 241))
+                self.ui.bookTableWidget.item(i, 1).setBackground(QtGui.QColor(66, 244, 241))
+                self.ui.bookTableWidget.item(i, 2).setBackground(QtGui.QColor(66, 244, 241))
             i = i + 1
         self.show()
 

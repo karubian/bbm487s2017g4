@@ -47,14 +47,15 @@ class UserRegisterFormView(Ui_userRegisterForm):
         if self.type is 0:
             for field in [username, password, name, surname, email]:
                 if len(field) == 0:
-                    self.error.set_error_text("Please fill the blank fields.")
-                    self.error.show()
                     validation_flag = 1
             if validation_flag is 0:
                 if self.userController.add_new_member(username, password, name, surname, email) is None:
                     self.error.set_error_text("Username already exists!")
                     error_flag=1
                     self.error.errorScreen.exec_()
+            else:
+                self.error.set_error_text("Please fill the blank fields.")
+                self.error.errorScreen.exec_()
         elif self.type is 1:
             self.userController.update_member([username, password, email, name, surname], self.currentUser)
         if error_flag is 0:
