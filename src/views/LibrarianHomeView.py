@@ -3,6 +3,7 @@ from views.gen.Ui_LibrarianHome import Ui_libraryMainWindow
 from controllers.UserController import UserController
 from controllers.BookController import BookController
 import views.ConfirmView as confirmView
+import views.ErrorView as errorView
 import views.UserRegisterFormView as userRegisterFormView
 import views.BookRegisterFormView as bookRegisterFormView
 import datetime
@@ -30,13 +31,15 @@ class LibrarianHomeView(Ui_libraryMainWindow):
         self.ui.bookTableWidget.cellDoubleClicked.connect(self.update_book_form)
         self.currentUser = user
         self.confirm = confirmView.ConfirmView()
-        self.error = None
+        self.error = errorView.ErrorView()
         self.userController = UserController()
         self.bookController = BookController()
         self.customize_scene()
         self.current_user_queries = ["", "", ""]
         self.current_book_queries = ["", "", ""]
         self.set_button_effects()
+        self.book_ids = []
+        self.user_ids = []
 
         self.list_users()
         self.list_books()
@@ -60,31 +63,36 @@ class LibrarianHomeView(Ui_libraryMainWindow):
     def delete_selected_user(self):
         selected_row = self.ui.userTableWidget.currentRow()
         if selected_row > -1:
-            selected_user = self.ui.userTableWidget.item(selected_row, 2).text()
+            #selected_user = self.ui.userTableWidget.item(selected_row, 2).text()
+            selected_user_id = self.user_ids[selected_row]
             self.confirm.confirm_flag = 0
             self.confirm.confirmScreen.exec_()
-            if self.confirm.confirm_flag is 2:
-                self.userController.delete_one_user(selected_user)
+            if self.confirm.confirm_flag is 1:
+                self.userController.delete_one_user(selected_user_id)
             self.list_users()
 
     def delete_selected_book(self):
         selected_row = self.ui.bookTableWidget.currentRow()
         if selected_row > -1:
-            selected_book = self.ui.bookTableWidget.item(selected_row, 0).text()
+            #selected_book = self.ui.bookTableWidget.item(selected_row, 0).text()
+            selected_book_id = self.book_ids[selected_row]
             self.confirm.confirm_flag = 0
             self.confirm.confirmScreen.exec_()
-            if self.confirm.confirm_flag is 2:
-                self.bookController.delete_one_book(selected_book)
+            if self.confirm.confirm_flag is 1:
+                if self.bookController.get_book_by_id(selected_book_id).isAvailable:
+                    self.bookController.delete_one_book_by_id(selected_book_id)
+                    self.userController.delete_from_all_owned_books(selected_book_id)
             self.list_books()
 
     def list_users(self):
+        self.user_ids = []
         query_result = self.userController.search_users(self.current_user_queries[0], self.current_user_queries[1],
                                                         self.current_user_queries[2])
         i = 0
         current_row_count = query_result.count()
         self.ui.userTableWidget.setRowCount(current_row_count)
-
         for record in query_result:
+            self.user_ids.insert(i,record["_id"])
             self.ui.userTableWidget.setItem(i, 0, QtWidgets.QTableWidgetItem(record["name"]))
             self.ui.userTableWidget.setItem(i, 1, QtWidgets.QTableWidgetItem(record["surname"]))
             self.ui.userTableWidget.setItem(i, 2, QtWidgets.QTableWidgetItem(record["username"]))
@@ -92,20 +100,21 @@ class LibrarianHomeView(Ui_libraryMainWindow):
         self.show()
 
     def list_books(self):
+        self.book_ids = []
         query_result = self.bookController.search_books(self.current_book_queries[0], self.current_book_queries[1],
                                                         self.current_book_queries[2])
         i = 0
         current_row_count = query_result.count()
         self.ui.bookTableWidget.setRowCount(current_row_count)
-
         for record in query_result:
+            self.book_ids.insert(i,record["_id"])
             self.ui.bookTableWidget.setItem(i, 0, QtWidgets.QTableWidgetItem(record["title"]))
             self.ui.bookTableWidget.setItem(i, 1, QtWidgets.QTableWidgetItem(record["author"]))
             self.ui.bookTableWidget.setItem(i, 2, QtWidgets.QTableWidgetItem(record["year"]))
             if record["isAvailable"] is False:
-                self.ui.bookTableWidget.item(i, 0).setBackground(QtGui.QColor(66, 244, 241))
-                self.ui.bookTableWidget.item(i, 1).setBackground(QtGui.QColor(66, 244, 241))
-                self.ui.bookTableWidget.item(i, 2).setBackground(QtGui.QColor(66, 244, 241))
+                self.ui.bookTableWidget.item(i, 0).setBackground(QtGui.QColor(255, 68, 68))
+                self.ui.bookTableWidget.item(i, 1).setBackground(QtGui.QColor(255, 68, 68))
+                self.ui.bookTableWidget.item(i, 2).setBackground(QtGui.QColor(255, 68, 68))
             i = i + 1
         self.show()
 
@@ -121,9 +130,10 @@ class LibrarianHomeView(Ui_libraryMainWindow):
     def update_user_form(self):
         selected_row = self.ui.userTableWidget.currentRow()
         if selected_row > -1:
-            selected_user = self.ui.userTableWidget.item(selected_row, 2).text()
+            #selected_user = self.ui.userTableWidget.item(selected_row, 2).text()
+            selected_user_id = self.user_ids[selected_row]
             self.userRegisterScreen.type = 1
-            self.userRegisterScreen.currentUser = self.userController.get_user_by_username(selected_user)
+            self.userRegisterScreen.currentUser = self.userController.get_user_by_id(selected_user_id)
             self.userRegisterScreen.prepare_update(self.userRegisterScreen.currentUser)
             self.userRegisterScreen.userRegisterFormScreen.exec_()
             self.list_users()
@@ -131,9 +141,10 @@ class LibrarianHomeView(Ui_libraryMainWindow):
     def update_book_form(self):
         selected_row = self.ui.bookTableWidget.currentRow()
         if selected_row > -1:
-            selected_book = self.ui.bookTableWidget.item(selected_row, 0).text()
+            #selected_book = self.ui.bookTableWidget.item(selected_row, 0).text()
+            selected_book_id = self.book_ids[selected_row]
             self.bookRegisterScreen.type = 1
-            self.bookRegisterScreen.currentBook = self.bookController.get_book_by_title(selected_book)
+            self.bookRegisterScreen.currentBook = self.bookController.get_book_by_id(selected_book_id)
             self.bookRegisterScreen.prepare_update(self.bookRegisterScreen.currentBook)
             self.bookRegisterScreen.bookRegisterFormScreen.exec_()
             self.list_books()
@@ -202,12 +213,11 @@ class LibrarianHomeView(Ui_libraryMainWindow):
         self.ui.userResetButton.released.connect(self.released_color_change)
         self.ui.userResetButton.pressed.connect(self.pressed_color_change)
 
-
     # def delete_user_operation(self):
-        #     items = self.ui.userListView.selectedIndexes()
-        #     aa = self.ui.userListView.model().itemData(self.ui.userListView.selectedIndexes()[0])
-        #     print(aa[0])
-        #     for data in items:
-        #         print(data.row())
-        #     self.confirm = confirmView.ConfirmView()
-        #     self.confirm.show()
+    #     items = self.ui.userListView.selectedIndexes()
+    #     aa = self.ui.userListView.model().itemData(self.ui.userListView.selectedIndexes()[0])
+    #     print(aa[0])
+    #     for data in items:
+    #         print(data.row())
+    #     self.confirm = confirmView.ConfirmView()
+    #     self.confirm.show()

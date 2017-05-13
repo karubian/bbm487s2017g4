@@ -10,6 +10,7 @@ class Loan:
         self.returnDate = self.startDate + datetime.timedelta(days=40)
         self.currentFine = 0
         self.status = 0
+
     def calculate_fine(self, elapsed_days):
         self.currentFine = 5 + (elapsed_days - 40) * 1.5
 

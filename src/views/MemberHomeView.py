@@ -3,8 +3,10 @@ from views.gen.Ui_MemberHome import Ui_memberMainWindow
 from controllers.UserController import UserController
 from controllers.BookController import BookController
 from controllers.LoanController import LoanController
+import views.BookInfoView as bookInfoView
 import views.ConfirmView as confirmView
 import views.ErrorView as errorView
+import views.PaymentView as paymentView
 import datetime
 
 
@@ -24,12 +26,20 @@ class MemberHomeView(Ui_memberMainWindow):
         self.ui.checkoutButton.clicked.connect(self.checkout_book)
         self.ui.cancelSelected.clicked.connect(self.cancel_waiting)
         self.ui.returnBookButton.clicked.connect(self.return_operation)
+        self.ui.payFineButton.clicked.connect(self.payment_operation)
+        self.ui.waitingListWidget.cellDoubleClicked.connect(self.show_book_info_waiting)
+        self.ui.viewBookWidget.cellDoubleClicked.connect(self.show_book_info_view)
+        self.ui.searchBookWidget.cellDoubleClicked.connect(self.show_book_info_search)
         self.currentUser = user
+        self.payment = paymentView.PaymentView(0)
         self.prepare_scene()
         self.current_book_queries = ["", "", ""]
         self.update_lists()
         self.update_scene()
         self.set_button_effects()
+        self.book_info = None
+        self.book_ids = []
+        self.user_ids = []
 
     def prepare_scene(self):
         self.ui.greetingLabel.setText("Hi, " + str(self.currentUser.name) + " " + str(self.currentUser.surname))
@@ -46,7 +56,6 @@ class MemberHomeView(Ui_memberMainWindow):
         self.ui.fineLabel.setText("Current Fine Amount : $" + str(self.currentUser.fineAmount))
         self.ui.totalBooksLabel.setText("Total Loaned Books : " + str(self.currentUser.totalLoanedBooks))
 
-
     def logout(self):
         import views.LoginView as LoginView
         self.memberHome.hide()
@@ -55,6 +64,41 @@ class MemberHomeView(Ui_memberMainWindow):
 
     def show(self):
         self.memberHome.show()
+
+    def payment_operation(self):
+        self.payment = paymentView.PaymentView(self.currentUser.fineAmount)
+        self.payment.paymentPrompt.exec_()
+        if self.payment.paymentFlag:
+            self.currentUser.fineAmount = 0
+            self.userController.update_member_attributes(self.currentUser)
+        self.update_scene()
+
+    def show_book_info_view(self):
+        selected_row = self.ui.viewBookWidget.currentRow()
+        if selected_row > -1:
+            selected_book_title = self.ui.viewBookWidget.item(selected_row, 0).text()
+            selected_book = self.bookController.get_book_by_title(selected_book_title)
+            self.book_info = bookInfoView.BookInfoView(selected_book)
+            self.book_info.update_scene()
+            self.book_info.show()
+
+    def show_book_info_search(self):
+        selected_row = self.ui.searchBookWidget.currentRow()
+        if selected_row > -1:
+            selected_book_title = self.ui.searchBookWidget.item(selected_row, 0).text()
+            selected_book = self.bookController.get_book_by_title(selected_book_title)
+            self.book_info = bookInfoView.BookInfoView(selected_book)
+            self.book_info.update_scene()
+            self.book_info.show()
+
+    def show_book_info_waiting(self):
+        selected_row = self.ui.waitingListWidget.currentRow()
+        if selected_row > -1:
+            selected_book_title = self.ui.waitingListWidget.item(selected_row, 0).text()
+            selected_book = self.bookController.get_book_by_title(selected_book_title)
+            self.book_info = bookInfoView.BookInfoView(selected_book)
+            self.book_info.update_scene()
+            self.book_info.show()
 
     def reset_book_filters(self):
         self.current_book_queries = ["", "", ""]
@@ -72,9 +116,9 @@ class MemberHomeView(Ui_memberMainWindow):
             self.ui.searchBookWidget.setItem(i, 1, QtWidgets.QTableWidgetItem(record["author"]))
             self.ui.searchBookWidget.setItem(i, 2, QtWidgets.QTableWidgetItem(record["year"]))
             if record["isAvailable"] is False:
-                self.ui.searchBookWidget.item(i, 0).setBackground(QtGui.QColor(66, 244, 241))
-                self.ui.searchBookWidget.item(i, 1).setBackground(QtGui.QColor(66, 244, 241))
-                self.ui.searchBookWidget.item(i, 2).setBackground(QtGui.QColor(66, 244, 241))
+                self.ui.searchBookWidget.item(i, 0).setBackground(QtGui.QColor(255, 68, 68))
+                self.ui.searchBookWidget.item(i, 1).setBackground(QtGui.QColor(255, 68, 68))
+                self.ui.searchBookWidget.item(i, 2).setBackground(QtGui.QColor(255, 68, 68))
             i = i + 1
         self.show()
 
@@ -153,12 +197,12 @@ class MemberHomeView(Ui_memberMainWindow):
     def cancel_waiting(self):
         selected_row = self.ui.waitingListWidget.currentRow()
         if selected_row > -1:
-            selected_book_title = self.ui.waitingListWidget.item(selected_row, 0).text()
-            selected_book = self.bookController.get_book_by_title(selected_book_title)
+            #selected_book_title = self.ui.waitingListWidget.item(selected_row, 0).text()
+            selected_book = self.bookController.get_book_by_id(self.currentUser.waitingBooks[selected_row])
             self.confirm.confirm_flag = 0
             self.confirm.set_confirm_text("Are you sure you want to cancel waiting for this book?")
             self.confirm.confirmScreen.exec_()
-            if self.confirm.confirm_flag is 2:
+            if self.confirm.confirm_flag is 1:
                 self.currentUser.waitingBooks.remove(selected_book.id)
                 selected_book.waitingList.remove(self.currentUser.id)
                 self.userController.update_member_attributes(self.currentUser)
@@ -168,12 +212,12 @@ class MemberHomeView(Ui_memberMainWindow):
     def return_operation(self):
         selected_row = self.ui.viewBookWidget.currentRow()
         if selected_row > -1:
-            selected_book_title = self.ui.viewBookWidget.item(selected_row, 0).text()
-            selected_book = self.bookController.get_book_by_title(selected_book_title)
+            #selected_book_title = self.ui.viewBookWidget.item(selected_row, 0).text()
+            selected_book = self.bookController.get_book_by_id(self.currentUser.loanedBooks[selected_row])
             self.confirm.confirm_flag = 0
             self.confirm.set_confirm_text("Are you sure you want to return this book?")
             self.confirm.confirmScreen.exec_()
-            if self.confirm.confirm_flag is 2:
+            if self.confirm.confirm_flag is 1:
                 self.loanController.return_book(self.currentUser, selected_book)
                 self.update_lists()
                 self.update_scene()

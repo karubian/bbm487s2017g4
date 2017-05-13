@@ -4,6 +4,7 @@ import views.MemberHomeView as memberHomeView
 import views.LibrarianHomeView as librarianHomeView
 from views.gen.Ui_Login import Ui_Login
 import views.ErrorView as errorView
+import views.GuestWindowView as guestWindowView
 
 
 class LoginView(Ui_Login):
@@ -12,6 +13,7 @@ class LoginView(Ui_Login):
         self.ui = Ui_Login()
         self.ui.setupUi(self.login)
         self.ui.loginButton.clicked.connect(self.user_login)
+        self.ui.searchButton.clicked.connect(self.guest_search)
         self.userController = UserController()
         self.error = errorView.ErrorView()
 
@@ -24,6 +26,11 @@ class LoginView(Ui_Login):
 
     def get_login_info(self):
         return self.ui.usernameText.text(), self.ui.passText.text()
+
+    def guest_search(self):
+        self.login.hide()
+        self.ui = guestWindowView.GuestWindowView()
+        self.ui.show()
 
     def user_login(self):
         user, password = self.get_login_info()

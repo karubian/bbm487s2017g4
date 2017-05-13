@@ -18,10 +18,10 @@ class ConfirmView(Ui_confirmDialog):
         self.ui.confirmMessage.setText(message)
 
     def do_nothing(self):
-        self.confirm_flag = 1
+        self.confirm_flag = 0
         self.confirmScreen.hide()
 
     def confirm_operation(self):
-        self.confirm_flag = 2
+        self.confirm_flag = 1
         self.confirmScreen.hide()
 

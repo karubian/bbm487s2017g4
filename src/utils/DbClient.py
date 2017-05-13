@@ -17,26 +17,38 @@ class DbClient:
             return 0
         return found_user
 
+    def find_user_by_id(self, user_id):
+        found_user = self.db.users.find_one({"_id": user_id})
+        if found_user is None:
+            return 0
+        return found_user
+
     def find_book_by_title(self, title):
         found_book = self.db.books.find_one({"title": title})
         if found_book is None:
             return 0
         return found_book
 
-    def find_book_by_id(self, id):
-        found_book = self.db.books.find_one({"_id": id})
+    def find_book_by_id(self, book_id):
+        found_book = self.db.books.find_one({"_id": book_id})
         if found_book is None:
-            return 0
+            return None
         return found_book
 
     def delete_user(self, username):
         self.db.users.delete_one({'username': username})
+
+    def delete_user_by_id(self, user_id):
+        self.db.users.delete_one({'_id': user_id})
 
     def delete_loan_record(self, book_id):
         self.db.loans.delete_one({'book_id': book_id})
 
     def delete_book(self, title):
         self.db.books.delete_one({'title': title})
+
+    def delete_book_by_id(self, book_id):
+        self.db.books.delete_one({'_id': book_id})
 
     def add_new_book_db(self, new_book):
         try:
@@ -45,8 +57,10 @@ class DbClient:
                     "title": new_book.title,
                     "author": new_book.author,
                     "year": new_book.publishedYear,
+                    "description": new_book.description,
                     "isAvailable": new_book.isAvailable,
-                    "waitingList": new_book.waitingList
+                    "waitingList": new_book.waitingList,
+                    "publisher" : new_book.publisher
                 }
             )
             return 1
@@ -67,7 +81,7 @@ class DbClient:
                     "loanedBooks": new_user.loanedBooks,
                     "email": new_user.email_address,
                     "totalLoanedBooks": new_user.totalLoanedBooks,
-                    "lastLoanedBook":new_user.lastLoanedBook
+                    "lastLoanedBook": new_user.lastLoanedBook
                 }
             )
             return 1
@@ -125,7 +139,7 @@ class DbClient:
                 "loanedBooks": updated_member.loanedBooks,
                 "email": updated_member.email_address,
                 "totalLoanedBooks": updated_member.totalLoanedBooks,
-                "lastLoanedBook":updated_member.lastLoanedBook
+                "lastLoanedBook": updated_member.lastLoanedBook
             }
             })
             return 1
@@ -139,8 +153,10 @@ class DbClient:
                 "title": updated_book.title,
                 "author": updated_book.author,
                 "year": updated_book.publishedYear,
+                "description": updated_book.description,
                 "isAvailable": updated_book.isAvailable,
                 "waitingList": updated_book.waitingList,
+                "publisher" : updated_book.publisher
             }
             })
             return 1
@@ -154,6 +170,8 @@ class DbClient:
                 "title": newBookInfo[0],
                 "author": newBookInfo[1],
                 "year": newBookInfo[2],
+                "description": newBookInfo[3],
+                "publisher" : newBookInfo[4]
             }
             })
             return 1
@@ -190,6 +208,7 @@ class DbClient:
         })
 
         return found_info
+
 
     def close_session(self):
         self.client.close()

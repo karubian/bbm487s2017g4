@@ -5,8 +5,7 @@ class Book:
         self.publishedYear = publishedYear
         self.isAvailable = True
         self.waitingList = []
-        self.id= None
+        self.id = None
         self.description = None
         self.publisher = None
-        self.language = None
-        self.industrial_id = None
+        self.barcode_id = None
