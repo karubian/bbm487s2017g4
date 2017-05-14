@@ -2,6 +2,7 @@ import pymongo
 from .Singleton import Singleton
 from bson.objectid import ObjectId
 
+
 @Singleton
 class DbClient:
     def __init__(self):
@@ -11,7 +12,6 @@ class DbClient:
         self.db = self.client.bbm487_library
 
     def find_user_by_username(self, username):
-        new_user = None
         found_user = self.db.users.find_one({"username": username})
         if found_user is None:
             return 0
@@ -43,6 +43,7 @@ class DbClient:
 
     def delete_user(self, username):
         self.db.users.delete_one({'username': username})
+        return
 
     def delete_user_by_id(self, user_id):
         self.db.users.delete_one({'_id': user_id})
