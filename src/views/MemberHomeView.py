@@ -172,7 +172,7 @@ class MemberHomeView(Ui_memberMainWindow):
     def check_notifications(self):
         for book in self.currentUser.waitingBooks:
             if self.bookController.get_book_by_id(book).isAvailable:
-                self.notification.set_notif_text(self.bookController.get_book_by_id(book).title +
+                self.notification.set_notif_text("\"" + self.bookController.get_book_by_id(book).title + "\"" +
                                                  " is available to rent.")
                 self.notification.show()
 

@@ -13,7 +13,7 @@ class PaymentView(Ui_paymentDialog):
         self.paymentFlag = 0
         self.ui.proceedButton.clicked.connect(self.transaction)
         self.ui.proceedButton_2.clicked.connect(self.terminate)
-        self.ui.priceLabel.setText(str(self.fineAmount) + " TRY.")
+        self.ui.priceLabel.setText(str(self.fineAmount) + " TRY")
 
     def show(self):
         self.paymentPrompt.show()

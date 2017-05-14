@@ -10,6 +10,7 @@ class DbClient:
         self.uri = 'mongodb://localhost:27017/'
         self.client = pymongo.MongoClient(self.uri)
         self.db = self.client.bbm487_library
+        self.db.users.create_index("username",unique=True)
 
     def find_user_by_username(self, username):
         found_user = self.db.users.find_one({"username": username})
