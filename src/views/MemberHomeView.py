@@ -7,6 +7,7 @@ import views.BookInfoView as bookInfoView
 import views.ConfirmView as confirmView
 import views.ErrorView as errorView
 import views.PaymentView as paymentView
+import views.NotificationView as notificationView
 import datetime
 
 
@@ -18,6 +19,7 @@ class MemberHomeView(Ui_memberMainWindow):
         self.ui.logoutButton.clicked.connect(self.logout)
         self.confirm = confirmView.ConfirmView()
         self.error = errorView.ErrorView()
+        self.notification = notificationView.NotificationView()
         self.userController = UserController()
         self.bookController = BookController()
         self.loanController = LoanController()
@@ -38,8 +40,7 @@ class MemberHomeView(Ui_memberMainWindow):
         self.update_scene()
         self.set_button_effects()
         self.book_info = None
-        self.book_ids = []
-        self.user_ids = []
+        self.check_notifications()
 
     def prepare_scene(self):
         self.ui.greetingLabel.setText("Hi, " + str(self.currentUser.name) + " " + str(self.currentUser.surname))
@@ -155,10 +156,10 @@ class MemberHomeView(Ui_memberMainWindow):
                 self.error.set_error_text("You already loaned this book.")
                 self.error.errorScreen.exec_()
             elif selected_book.isAvailable is False:
-                if selected_book.id not in self.currentUser.waitingBooks:
-                    self.currentUser.waitingBooks.append(selected_book.id)
-                if self.currentUser.id not in selected_book.waitingList:
-                    selected_book.waitingList.append(self.currentUser.id)
+                if str(selected_book.id) not in self.currentUser.waitingBooks:
+                    self.currentUser.waitingBooks.append(str(selected_book.id))
+                if str(self.currentUser.id) not in selected_book.waitingList:
+                    selected_book.waitingList.append(str(self.currentUser.id))
                 self.userController.update_member_attributes(self.currentUser)
                 self.bookController.update_book_attributes(selected_book)
                 self.update_lists()
@@ -167,6 +168,13 @@ class MemberHomeView(Ui_memberMainWindow):
         self.list_user_waiting_list()
         self.list_books()
         self.list_loaned_books()
+
+    def check_notifications(self):
+        for book in self.currentUser.waitingBooks:
+            if self.bookController.get_book_by_id(book).isAvailable:
+                self.notification.set_notif_text(self.bookController.get_book_by_id(book).title +
+                                                 " is available to rent.")
+                self.notification.show()
 
     def list_user_waiting_list(self):
         i = 0
@@ -178,6 +186,10 @@ class MemberHomeView(Ui_memberMainWindow):
             self.ui.waitingListWidget.setItem(i, 0, QtWidgets.QTableWidgetItem(waited_book.title))
             self.ui.waitingListWidget.setItem(i, 1, QtWidgets.QTableWidgetItem(waited_book.author))
             self.ui.waitingListWidget.setItem(i, 2, QtWidgets.QTableWidgetItem(waited_book.publishedYear))
+            if waited_book.isAvailable is False:
+                self.ui.waitingListWidget.item(i, 0).setBackground(QtGui.QColor(255, 68, 68))
+                self.ui.waitingListWidget.item(i, 1).setBackground(QtGui.QColor(255, 68, 68))
+                self.ui.waitingListWidget.item(i, 2).setBackground(QtGui.QColor(255, 68, 68))
             i = i + 1
         self.show()
 
@@ -197,14 +209,14 @@ class MemberHomeView(Ui_memberMainWindow):
     def cancel_waiting(self):
         selected_row = self.ui.waitingListWidget.currentRow()
         if selected_row > -1:
-            #selected_book_title = self.ui.waitingListWidget.item(selected_row, 0).text()
+            # selected_book_title = self.ui.waitingListWidget.item(selected_row, 0).text()
             selected_book = self.bookController.get_book_by_id(self.currentUser.waitingBooks[selected_row])
             self.confirm.confirm_flag = 0
             self.confirm.set_confirm_text("Are you sure you want to cancel waiting for this book?")
             self.confirm.confirmScreen.exec_()
             if self.confirm.confirm_flag is 1:
-                self.currentUser.waitingBooks.remove(selected_book.id)
-                selected_book.waitingList.remove(self.currentUser.id)
+                self.currentUser.waitingBooks.remove(str(selected_book.id))
+                selected_book.waitingList.remove(str(self.currentUser.id))
                 self.userController.update_member_attributes(self.currentUser)
                 self.bookController.update_book_attributes(selected_book)
         self.update_lists()
@@ -212,7 +224,7 @@ class MemberHomeView(Ui_memberMainWindow):
     def return_operation(self):
         selected_row = self.ui.viewBookWidget.currentRow()
         if selected_row > -1:
-            #selected_book_title = self.ui.viewBookWidget.item(selected_row, 0).text()
+            # selected_book_title = self.ui.viewBookWidget.item(selected_row, 0).text()
             selected_book = self.bookController.get_book_by_id(self.currentUser.loanedBooks[selected_row])
             self.confirm.confirm_flag = 0
             self.confirm.set_confirm_text("Are you sure you want to return this book?")

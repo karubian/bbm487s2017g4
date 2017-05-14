@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets
-
 import views.LoginView as LoginController
+
 
 if __name__ == "__main__":
     import sys

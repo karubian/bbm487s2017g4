@@ -33,6 +33,8 @@ class BookRegisterFormView(Ui_bookRegisterForm):
         self.ui.authorLineEdit.setText(book.author)
         self.ui.titleLineEdit.setText(book.title)
         self.ui.yearLineEdit.setText(book.publishedYear)
+        self.ui.descriptionTextEdit.setPlainText(book.description)
+        self.ui.publisherLineEdit.setText(book.publisher)
 
     def register_book(self):
         author = self.ui.authorLineEdit.text()

@@ -1,6 +1,6 @@
 import pymongo
 from .Singleton import Singleton
-
+from bson.objectid import ObjectId
 
 @Singleton
 class DbClient:
@@ -18,7 +18,10 @@ class DbClient:
         return found_user
 
     def find_user_by_id(self, user_id):
-        found_user = self.db.users.find_one({"_id": user_id})
+        if type(user_id) is str:
+            found_user = self.db.users.find_one({"_id": ObjectId(user_id)})
+        else:
+            found_user = self.db.users.find_one({"_id": user_id})
         if found_user is None:
             return 0
         return found_user
@@ -30,7 +33,10 @@ class DbClient:
         return found_book
 
     def find_book_by_id(self, book_id):
-        found_book = self.db.books.find_one({"_id": book_id})
+        if type(book_id) is str:
+            found_book = self.db.books.find_one({"_id": ObjectId(book_id)})
+        else:
+            found_book = self.db.books.find_one({"_id": book_id})
         if found_book is None:
             return None
         return found_book
@@ -60,7 +66,7 @@ class DbClient:
                     "description": new_book.description,
                     "isAvailable": new_book.isAvailable,
                     "waitingList": new_book.waitingList,
-                    "publisher" : new_book.publisher
+                    "publisher": new_book.publisher
                 }
             )
             return 1
@@ -116,7 +122,7 @@ class DbClient:
                 '_id': userToUpdate.id}, {"$set": {
                 "username": newUserInfo[0],
                 "password": newUserInfo[1],
-                "email_address": newUserInfo[2],
+                "email": newUserInfo[2],
                 "name": newUserInfo[3],
                 "surname": newUserInfo[4]
             }
@@ -131,13 +137,12 @@ class DbClient:
                 '_id': updated_member.id}, {"$set": {
                 "username": updated_member.username,
                 "password": updated_member.password,
-                "email_address": updated_member.email_address,
+                "email": updated_member.email_address,
                 "name": updated_member.name,
                 "surname": updated_member.surname,
                 "waitingBooks": updated_member.waitingBooks,
                 "fineAmount": updated_member.fineAmount,
                 "loanedBooks": updated_member.loanedBooks,
-                "email": updated_member.email_address,
                 "totalLoanedBooks": updated_member.totalLoanedBooks,
                 "lastLoanedBook": updated_member.lastLoanedBook
             }
@@ -156,7 +161,7 @@ class DbClient:
                 "description": updated_book.description,
                 "isAvailable": updated_book.isAvailable,
                 "waitingList": updated_book.waitingList,
-                "publisher" : updated_book.publisher
+                "publisher": updated_book.publisher
             }
             })
             return 1
@@ -171,7 +176,7 @@ class DbClient:
                 "author": newBookInfo[1],
                 "year": newBookInfo[2],
                 "description": newBookInfo[3],
-                "publisher" : newBookInfo[4]
+                "publisher": newBookInfo[4]
             }
             })
             return 1
@@ -208,7 +213,6 @@ class DbClient:
         })
 
         return found_info
-
 
     def close_session(self):
         self.client.close()

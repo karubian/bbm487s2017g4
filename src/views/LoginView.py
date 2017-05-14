@@ -1,5 +1,6 @@
 from PyQt5 import QtWidgets
 from controllers.UserController import UserController
+from controllers.LoanController import LoanController
 import views.MemberHomeView as memberHomeView
 import views.LibrarianHomeView as librarianHomeView
 from views.gen.Ui_Login import Ui_Login
@@ -18,6 +19,8 @@ class LoginView(Ui_Login):
         self.error = errorView.ErrorView()
 
     def show(self):
+        loan_controller = LoanController()
+        loan_controller.update_fines()
         self.login.show()
 
     def clear_login_forms(self):

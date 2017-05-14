@@ -21,5 +21,4 @@ class BookInfoView(Ui_bookInfoWindow):
         self.ui.titleLabel.setText("Title : " + self.book.title)
         self.ui.authorLabel.setText("Author : " + self.book.author)
         self.ui.PublicationLabel.setText("Publication Date : " + str(self.book.publishedYear))
-        print(self.book.description)
         self.ui.textBrowser.insertPlainText(self.book.description)

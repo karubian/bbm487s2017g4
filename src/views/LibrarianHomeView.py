@@ -47,10 +47,12 @@ class LibrarianHomeView(Ui_libraryMainWindow):
     def customize_scene(self):
         self.ui.greetingLabel.setText("Hi, " + str(self.currentUser.name) + " " + str(self.currentUser.surname))
         self.ui.dateLabel.setText(datetime.datetime.now().strftime("%Y-%m-%d"))
-        self.ui.userTableWidget.setColumnCount(3)
-        self.ui.bookTableWidget.setColumnCount(3)
-        self.ui.userTableWidget.setHorizontalHeaderLabels(["Name", "Surname", "Username"])
-        self.ui.bookTableWidget.setHorizontalHeaderLabels(["Title", "Author", "Published Year"])
+        self.ui.userTableWidget.setColumnCount(4)
+        self.ui.bookTableWidget.setColumnCount(4)
+        self.ui.userTableWidget.setHorizontalHeaderLabels(["Name", "Surname", "Username","User ID"])
+        self.ui.bookTableWidget.setHorizontalHeaderLabels(["Title", "Author", "Published Year","Book ID"])
+        self.ui.bookTableWidget.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.ui.userTableWidget.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
 
     def reset_user_filters(self):
         self.current_user_queries = ["", "", ""]
@@ -64,53 +66,51 @@ class LibrarianHomeView(Ui_libraryMainWindow):
         selected_row = self.ui.userTableWidget.currentRow()
         if selected_row > -1:
             #selected_user = self.ui.userTableWidget.item(selected_row, 2).text()
-            selected_user_id = self.user_ids[selected_row]
+            selected_user_id = self.ui.userTableWidget.item(selected_row, 3).text()
             self.confirm.confirm_flag = 0
             self.confirm.confirmScreen.exec_()
             if self.confirm.confirm_flag is 1:
-                self.userController.delete_one_user(selected_user_id)
+                self.userController.delete_one_user(str(selected_user_id))
             self.list_users()
 
     def delete_selected_book(self):
         selected_row = self.ui.bookTableWidget.currentRow()
         if selected_row > -1:
             #selected_book = self.ui.bookTableWidget.item(selected_row, 0).text()
-            selected_book_id = self.book_ids[selected_row]
+            selected_book_id = self.ui.bookTableWidget.item(selected_row, 3).text()
             self.confirm.confirm_flag = 0
             self.confirm.confirmScreen.exec_()
             if self.confirm.confirm_flag is 1:
-                if self.bookController.get_book_by_id(selected_book_id).isAvailable:
-                    self.bookController.delete_one_book_by_id(selected_book_id)
-                    self.userController.delete_from_all_owned_books(selected_book_id)
+                if self.bookController.get_book_by_id(str(selected_book_id)).isAvailable:
+                    self.bookController.delete_one_book_by_id(str(selected_book_id))
+                    self.userController.delete_from_all_owned_books(str(selected_book_id))
             self.list_books()
 
     def list_users(self):
-        self.user_ids = []
         query_result = self.userController.search_users(self.current_user_queries[0], self.current_user_queries[1],
                                                         self.current_user_queries[2])
         i = 0
         current_row_count = query_result.count()
         self.ui.userTableWidget.setRowCount(current_row_count)
         for record in query_result:
-            self.user_ids.insert(i,record["_id"])
             self.ui.userTableWidget.setItem(i, 0, QtWidgets.QTableWidgetItem(record["name"]))
             self.ui.userTableWidget.setItem(i, 1, QtWidgets.QTableWidgetItem(record["surname"]))
             self.ui.userTableWidget.setItem(i, 2, QtWidgets.QTableWidgetItem(record["username"]))
+            self.ui.userTableWidget.setItem(i, 3, QtWidgets.QTableWidgetItem(str(record["_id"])))
             i = i + 1
         self.show()
 
     def list_books(self):
-        self.book_ids = []
         query_result = self.bookController.search_books(self.current_book_queries[0], self.current_book_queries[1],
                                                         self.current_book_queries[2])
         i = 0
         current_row_count = query_result.count()
         self.ui.bookTableWidget.setRowCount(current_row_count)
         for record in query_result:
-            self.book_ids.insert(i,record["_id"])
             self.ui.bookTableWidget.setItem(i, 0, QtWidgets.QTableWidgetItem(record["title"]))
             self.ui.bookTableWidget.setItem(i, 1, QtWidgets.QTableWidgetItem(record["author"]))
             self.ui.bookTableWidget.setItem(i, 2, QtWidgets.QTableWidgetItem(record["year"]))
+            self.ui.bookTableWidget.setItem(i, 3, QtWidgets.QTableWidgetItem(str(record["_id"])))
             if record["isAvailable"] is False:
                 self.ui.bookTableWidget.item(i, 0).setBackground(QtGui.QColor(255, 68, 68))
                 self.ui.bookTableWidget.item(i, 1).setBackground(QtGui.QColor(255, 68, 68))
@@ -130,10 +130,9 @@ class LibrarianHomeView(Ui_libraryMainWindow):
     def update_user_form(self):
         selected_row = self.ui.userTableWidget.currentRow()
         if selected_row > -1:
-            #selected_user = self.ui.userTableWidget.item(selected_row, 2).text()
-            selected_user_id = self.user_ids[selected_row]
+            selected_user_id = self.ui.userTableWidget.item(selected_row, 3).text()
             self.userRegisterScreen.type = 1
-            self.userRegisterScreen.currentUser = self.userController.get_user_by_id(selected_user_id)
+            self.userRegisterScreen.currentUser = self.userController.get_user_by_id(str(selected_user_id))
             self.userRegisterScreen.prepare_update(self.userRegisterScreen.currentUser)
             self.userRegisterScreen.userRegisterFormScreen.exec_()
             self.list_users()
@@ -141,10 +140,9 @@ class LibrarianHomeView(Ui_libraryMainWindow):
     def update_book_form(self):
         selected_row = self.ui.bookTableWidget.currentRow()
         if selected_row > -1:
-            #selected_book = self.ui.bookTableWidget.item(selected_row, 0).text()
-            selected_book_id = self.book_ids[selected_row]
+            selected_book_id = self.ui.bookTableWidget.item(selected_row, 3).text()
             self.bookRegisterScreen.type = 1
-            self.bookRegisterScreen.currentBook = self.bookController.get_book_by_id(selected_book_id)
+            self.bookRegisterScreen.currentBook = self.bookController.get_book_by_id(str(selected_book_id))
             self.bookRegisterScreen.prepare_update(self.bookRegisterScreen.currentBook)
             self.bookRegisterScreen.bookRegisterFormScreen.exec_()
             self.list_books()

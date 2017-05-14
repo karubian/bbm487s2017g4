@@ -22,14 +22,15 @@ class UserController:
     def get_user_by_id(self, user_id):
         found_user_info = self.client.find_user_by_id(user_id)
         new_user = None
-        if found_user_info["type"] == "member":
-            new_user = self.instantiate_user(found_user_info)
-        elif found_user_info["type"] == "librarian":
-            new_user = Librarian(found_user_info["username"], found_user_info["password"], found_user_info["name"],
-                                 found_user_info["surname"], found_user_info["email"])
-        new_user.id = found_user_info["_id"]
+        if found_user_info:
+            if found_user_info["type"] == "member":
+                new_user = self.instantiate_user(found_user_info)
+            elif found_user_info["type"] == "librarian":
+                new_user = Librarian(found_user_info["username"], found_user_info["password"], found_user_info["name"],
+                                     found_user_info["surname"], found_user_info["email"])
+            new_user.id = found_user_info["_id"]
 
-        return new_user
+            return new_user
 
     def authorization(self, username, passkey):
         if self.client.db.users.find_one({"username": username, "password": passkey}) is not None:
