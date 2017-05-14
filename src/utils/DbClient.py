@@ -47,7 +47,10 @@ class DbClient:
         return
 
     def delete_user_by_id(self, user_id):
-        self.db.users.delete_one({'_id': user_id})
+        if type(user_id) is str:
+            self.db.books.delete_one({"_id": ObjectId(user_id)})
+        else:
+            self.db.users.delete_one({'_id': user_id})
 
     def delete_loan_record(self, book_id):
         self.db.loans.delete_one({'book_id': book_id})
@@ -56,7 +59,10 @@ class DbClient:
         self.db.books.delete_one({'title': title})
 
     def delete_book_by_id(self, book_id):
-        self.db.books.delete_one({'_id': book_id})
+        if type(book_id) is str:
+            self.db.books.delete_one({"_id": ObjectId(book_id)})
+        else:
+            self.db.books.delete_one({'_id': book_id})
 
     def add_new_book_db(self, new_book):
         try:

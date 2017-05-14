@@ -17,7 +17,7 @@
     <SUITE FILE_PATH="coverage/project$HomeController.coverage" NAME="HomeController Coverage Results" MODIFIED="1491241540640" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/controllers" />
     <SUITE FILE_PATH="coverage/project$Unittests_for_tests_ci_test_ci_test_test.coverage" NAME="Unittests for tests.ci_test.ci_test.test Coverage Results" MODIFIED="1491268823403" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/project$MailClient.coverage" NAME="MailClient Coverage Results" MODIFIED="1494709662989" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
-    <SUITE FILE_PATH="coverage/project$app.coverage" NAME="app Coverage Results" MODIFIED="1494803889752" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/project$app.coverage" NAME="app Coverage Results" MODIFIED="1494804956784" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/project$Unittests_for_tests_ci_test_MyTest_test.coverage" NAME="Unittests for tests.ci_test.MyTest.test Coverage Results" MODIFIED="1491268754159" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/project$PopupController.coverage" NAME="PopupController Coverage Results" MODIFIED="1491257393921" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/controllers" />
     <SUITE FILE_PATH="coverage/project$DbClient.coverage" NAME="DbClient Coverage Results" MODIFIED="1492767287360" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
@@ -59,11 +59,21 @@
       <file leaf-file-name="LibrarianHomeView.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/LibrarianHomeView.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="965">
-              <caret line="189" column="20" lean-forward="false" selection-start-line="189" selection-start-column="20" selection-end-line="189" selection-end-column="20" />
+            <state relative-caret-position="310">
+              <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
               <folding>
                 <element signature="e#0#42#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BookController.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/controllers/BookController.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="393">
+              <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -76,16 +86,6 @@
               <folding>
                 <element signature="e#0#42#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LoginView.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/LoginView.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-42">
-              <caret line="14" column="35" lean-forward="false" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -110,14 +110,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DbClient.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DbClient.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/DbClient.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="15" column="33" lean-forward="false" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
+            <state relative-caret-position="276">
+              <caret line="56" column="0" lean-forward="true" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Ui_LibrarianHome.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/views/gen/Ui_LibrarianHome.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="511">
+              <caret line="313" column="0" lean-forward="true" selection-start-line="313" selection-start-column="0" selection-end-line="313" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -137,16 +147,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GuestWindowView.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/GuestWindowView.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-473">
-              <caret line="17" column="33" lean-forward="false" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -211,7 +211,6 @@
         <option value="$PROJECT_DIR$/models/Librarian.py" />
         <option value="$PROJECT_DIR$/models/User.py" />
         <option value="$PROJECT_DIR$/utils/BookApiClient.py" />
-        <option value="$PROJECT_DIR$/views/gen/Ui_LibrarianHome.py" />
         <option value="$PROJECT_DIR$/models/Member.py" />
         <option value="$PROJECT_DIR$/views/gen/Ui_MemberHome.py" />
         <option value="$PROJECT_DIR$/views/UserRegisterFormView.py" />
@@ -239,6 +238,7 @@
         <option value="$PROJECT_DIR$/views/PaymentView.py" />
         <option value="$PROJECT_DIR$/views/MemberHomeView.py" />
         <option value="$PROJECT_DIR$/utils/DbClient.py" />
+        <option value="$PROJECT_DIR$/views/gen/Ui_LibrarianHome.py" />
       </list>
     </option>
   </component>
@@ -307,6 +307,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gen" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -731,7 +749,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/utils/DbClient.py</url>
-          <line>120</line>
+          <line>126</line>
           <option name="timeStamp" value="162" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -754,6 +772,11 @@
           <line>15</line>
           <option name="timeStamp" value="170" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/views/LibrarianHomeView.py</url>
+          <line>75</line>
+          <option name="timeStamp" value="171" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
@@ -765,7 +788,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="171" />
+      <option name="time" value="172" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -958,14 +981,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/BookController.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="14" column="47" lean-forward="true" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="42">
@@ -977,13 +992,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75852">
           <caret line="3612" column="8" lean-forward="false" selection-start-line="3612" selection-start-column="8" selection-end-line="3612" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python35/Lib/site-packages/pymongo/collection.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="979" column="41" lean-forward="true" selection-start-line="979" selection-start-column="41" selection-end-line="979" selection-end-column="41" />
         </state>
       </provider>
     </entry>
@@ -999,13 +1007,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/gen/Ui_LibrarianHome.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="308" column="0" lean-forward="false" selection-start-line="308" selection-start-column="0" selection-end-line="308" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1168,16 +1169,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/LibrarianHomeView.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="965">
-          <caret line="189" column="20" lean-forward="false" selection-start-line="189" selection-start-column="20" selection-end-line="189" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#42#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/UserRegisterFormView.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="472">
@@ -1186,13 +1177,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python35/Lib/site-packages/pymongo/collection.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1055">
+          <caret line="1475" column="78" lean-forward="true" selection-start-line="1475" selection-start-column="78" selection-end-line="1475" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/LibrarianHomeView.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/BookController.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="393">
+          <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/utils/DbClient.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="15" column="33" lean-forward="false" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
+        <state relative-caret-position="276">
+          <caret line="56" column="0" lean-forward="true" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/gen/Ui_LibrarianHome.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="511">
+          <caret line="313" column="0" lean-forward="true" selection-start-line="313" selection-start-column="0" selection-end-line="313" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
