@@ -4,6 +4,7 @@ from models.Loan import Loan
 from controllers.UserController import UserController
 from controllers.BookController import BookController
 import _thread
+import datetime
 
 
 class LoanController:
@@ -38,6 +39,7 @@ class LoanController:
         self.client.delete_loan_record(str(book.id))
         self.bookController.update_book_attributes(book)
         self.userController.update_member_attributes(user)
+        self.update_fines()
         self.available_notification(book)
 
     def available_notification(self, returned_book):
@@ -84,12 +86,20 @@ class LoanController:
                 self.bookController.update_book_attributes(op_book)
                 self.client.delete_loan_record(str(loan["book_id"]))
 
-    def delete_book_from_loans(self,book_id):
+    def delete_book_from_loans(self, book_id):
         loans = self.client.db.loans.find({})
         for loan in loans:
             if loan["book_id"] == book_id:
                 self.client.delete_loan_record(str(loan["book_id"]))
 
-
     def update_loan_attributes(self, loan):
         self.client.update_loan_attributes_db(loan)
+
+    def reset_user_loans(self, user_id):
+        loans = self.client.db.loans.find({})
+        for loan_info in loans:
+            if loan_info["user_id"] == user_id and loan_info["status"] == 1:
+                updated_loan = self.instantiate_loan(loan_info)
+                updated_loan.startDate = datetime.datetime.now()
+                updated_loan.check_status()
+                self.update_loan_attributes(updated_loan)

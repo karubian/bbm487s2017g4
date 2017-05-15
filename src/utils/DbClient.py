@@ -164,9 +164,8 @@ class DbClient:
     def update_loan_attributes_db(self, updated_loan):
         try:
             result = self.db.loans.update_one({
-                'book_id': ObjectId(updated_loan.book_id)}, {"$set": {
+                'book_id': str(updated_loan.book_id)}, {"$set": {
                 "currentFine": updated_loan.currentFine,
-                "formerFine": updated_loan.formerFine,
                 "status": updated_loan.status,
                 "returnDate": updated_loan.returnDate,
                 "startDate": updated_loan.startDate

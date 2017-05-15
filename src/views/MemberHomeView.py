@@ -54,6 +54,7 @@ class MemberHomeView(Ui_memberMainWindow):
         self.ui.waitingListWidget.setHorizontalHeaderLabels(["Title", "Author", "Published Year","User ID"])
 
     def update_scene(self):
+        self.currentUser = self.userController.get_user_by_id(self.currentUser.id)
         self.ui.lastBookLabel.setText("Last Loaned Book : " + self.currentUser.lastLoanedBook)
         self.ui.fineLabel.setText("Current Fine Amount : $" + str(self.currentUser.currentFine))
         self.ui.totalBooksLabel.setText("Total Loaned Books : " + str(self.currentUser.totalLoanedBooks))
@@ -75,8 +76,9 @@ class MemberHomeView(Ui_memberMainWindow):
         self.payment = paymentView.PaymentView(self.currentUser.formerFine)
         self.payment.paymentPrompt.exec_()
         if self.payment.paymentFlag:
-            self.currentUser.currentFine = self.currentUser.currentFine - self.currentUser.formerFine
-            self.currentUser.formerFine= 0
+            self.loanController.reset_user_loans(self.currentUser.id)
+            self.currentUser.currentFine = 0
+            self.currentUser.formerFine = 0
             self.userController.update_member_attributes(self.currentUser)
             self.loanController.update_fines()
         self.update_scene()
