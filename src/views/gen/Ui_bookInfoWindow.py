@@ -12,6 +12,13 @@ class Ui_bookInfoWindow(object):
     def setupUi(self, bookInfoWindow):
         bookInfoWindow.setObjectName("bookInfoWindow")
         bookInfoWindow.resize(796, 583)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(bookInfoWindow.sizePolicy().hasHeightForWidth())
+        bookInfoWindow.setSizePolicy(sizePolicy)
+        bookInfoWindow.setMinimumSize(QtCore.QSize(796, 583))
+        bookInfoWindow.setMaximumSize(QtCore.QSize(796, 583))
         bookInfoWindow.setStyleSheet("QFrame {\n"
 "border: 3px solid gray;\n"
 "border-radius: 40px;\n"
@@ -72,7 +79,7 @@ class Ui_bookInfoWindow(object):
 "}")
         self.authorLabel.setObjectName("authorLabel")
         self.descLabel = QtWidgets.QLabel(self.bookInfoWidget)
-        self.descLabel.setGeometry(QtCore.QRect(40, 220, 301, 51))
+        self.descLabel.setGeometry(QtCore.QRect(40, 200, 301, 51))
         font = QtGui.QFont()
         font.setPointSize(-1)
         self.descLabel.setFont(font)
@@ -93,7 +100,7 @@ class Ui_bookInfoWindow(object):
 "}")
         self.textBrowser.setObjectName("textBrowser")
         self.PublicationLabel = QtWidgets.QLabel(self.bookInfoWidget)
-        self.PublicationLabel.setGeometry(QtCore.QRect(40, 150, 531, 51))
+        self.PublicationLabel.setGeometry(QtCore.QRect(40, 140, 531, 51))
         font = QtGui.QFont()
         font.setPointSize(-1)
         self.PublicationLabel.setFont(font)
@@ -108,6 +115,7 @@ class Ui_bookInfoWindow(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.backButton.setObjectName("backButton")
         bookInfoWindow.setCentralWidget(self.centralwidget)

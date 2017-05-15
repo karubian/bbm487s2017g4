@@ -15,7 +15,7 @@ class BookRegisterFormView(Ui_bookRegisterForm):
         self.error = errorView.ErrorView()
         self.currentBook = None
         self.type = 0  # 0 for create user 1 for update user
-
+        self.set_button_effects()
     def show(self):
         self.bookRegisterFormScreen.show()
 
@@ -62,3 +62,28 @@ class BookRegisterFormView(Ui_bookRegisterForm):
                 self.bookController.update_book([title, author, year, description, publisher], self.currentBook)
         self.bookRegisterFormScreen.hide()
         self.clear_forms()
+
+
+    def set_button_effects(self):
+        self.ui.registerButton.released.connect(self.released_color_change)
+        self.ui.registerButton.pressed.connect(self.pressed_color_change)
+        self.ui.cancelButton.released.connect(self.released_color_change)
+        self.ui.cancelButton.pressed.connect(self.pressed_color_change)
+
+
+
+    def released_color_change(self):
+        self.bookRegisterFormScreen.sender().setStyleSheet("QPushButton {\n"
+                                                  "color: white;\n"
+                                                  "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
+                                                  "font-size: 30px;\n"
+                                                  "border-radius:10px;\n"
+                                                  "}")
+
+    def pressed_color_change(self):
+        self.bookRegisterFormScreen.sender().setStyleSheet("QPushButton {\n"
+                                                  "color: white;\n"
+                                                  "background-color: red;\n"
+                                                  "font-size: 30px;\n"
+                                                  "border-radius:10px;\n"
+                                                  "}")

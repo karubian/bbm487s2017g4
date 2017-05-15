@@ -11,7 +11,14 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_libraryMainWindow(object):
     def setupUi(self, libraryMainWindow):
         libraryMainWindow.setObjectName("libraryMainWindow")
-        libraryMainWindow.resize(1164, 836)
+        libraryMainWindow.resize(1168, 836)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(libraryMainWindow.sizePolicy().hasHeightForWidth())
+        libraryMainWindow.setSizePolicy(sizePolicy)
+        libraryMainWindow.setMinimumSize(QtCore.QSize(1168, 836))
+        libraryMainWindow.setMaximumSize(QtCore.QSize(1168, 836))
         libraryMainWindow.setStyleSheet("QFrame {\n"
 "border: 3px solid gray;\n"
 "border-radius: 40px;\n"
@@ -68,6 +75,7 @@ class Ui_libraryMainWindow(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.bookSearchButton.setObjectName("bookSearchButton")
         self.bookDeleteButton = QtWidgets.QPushButton(self.bookTab)
@@ -76,6 +84,7 @@ class Ui_libraryMainWindow(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.bookDeleteButton.setObjectName("bookDeleteButton")
         self.bookUpdateButton = QtWidgets.QPushButton(self.bookTab)
@@ -84,6 +93,7 @@ class Ui_libraryMainWindow(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.bookUpdateButton.setObjectName("bookUpdateButton")
         self.bookCreateButton = QtWidgets.QPushButton(self.bookTab)
@@ -92,6 +102,7 @@ class Ui_libraryMainWindow(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.bookCreateButton.setObjectName("bookCreateButton")
         self.titleLabel = QtWidgets.QLabel(self.bookTab)
@@ -148,6 +159,7 @@ class Ui_libraryMainWindow(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.bookResetButton.setObjectName("bookResetButton")
         self.yearLineEdit = QtWidgets.QLineEdit(self.bookTab)
@@ -171,6 +183,7 @@ class Ui_libraryMainWindow(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.userSearchButton.setObjectName("userSearchButton")
         self.userUpdateButton = QtWidgets.QPushButton(self.userTab)
@@ -179,6 +192,7 @@ class Ui_libraryMainWindow(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.userUpdateButton.setObjectName("userUpdateButton")
         self.userDeleteButton = QtWidgets.QPushButton(self.userTab)
@@ -187,6 +201,7 @@ class Ui_libraryMainWindow(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.userDeleteButton.setObjectName("userDeleteButton")
         self.userCreateButton = QtWidgets.QPushButton(self.userTab)
@@ -195,6 +210,7 @@ class Ui_libraryMainWindow(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.userCreateButton.setObjectName("userCreateButton")
         self.usernameLineEdit = QtWidgets.QLineEdit(self.userTab)
@@ -259,6 +275,7 @@ class Ui_libraryMainWindow(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.userResetButton.setObjectName("userResetButton")
         self.tabWidget.addTab(self.userTab, "")
@@ -271,6 +288,7 @@ class Ui_libraryMainWindow(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.logoutButton.setObjectName("logoutButton")
         self.label_2 = QtWidgets.QLabel(self.librarianMainFrame)

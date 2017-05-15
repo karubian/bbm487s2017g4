@@ -20,6 +20,7 @@ class GuestWindowView(Ui_GuestSearch):
         self.current_book_queries = ["", "", ""]
         self.list_books()
         self.ui.searchBookWidget_.cellDoubleClicked.connect(self.show_book_info_search)
+        self.set_button_effects()
 
     def show(self):
         self.guestSearchScreen.show()
@@ -73,3 +74,29 @@ class GuestWindowView(Ui_GuestSearch):
             self.book_info = bookInfoView.BookInfoView(selected_book)
             self.book_info.update_scene()
             self.book_info.show()
+
+
+    def set_button_effects(self):
+        self.ui.backButton.released.connect(self.released_color_change)
+        self.ui.backButton.pressed.connect(self.pressed_color_change)
+        self.ui.resetButton.released.connect(self.released_color_change)
+        self.ui.resetButton.pressed.connect(self.pressed_color_change)
+        self.ui.searchButton_.released.connect(self.released_color_change)
+        self.ui.searchButton_.pressed.connect(self.pressed_color_change)
+
+
+    def released_color_change(self):
+        self.guestSearchScreen.sender().setStyleSheet("QPushButton {\n"
+                                                  "color: white;\n"
+                                                  "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
+                                                  "font-size: 30px;\n"
+                                                  "border-radius:10px;\n"
+                                                  "}")
+
+    def pressed_color_change(self):
+        self.guestSearchScreen.sender().setStyleSheet("QPushButton {\n"
+                                                  "color: white;\n"
+                                                  "background-color: red;\n"
+                                                  "font-size: 30px;\n"
+                                                  "border-radius:10px;\n"
+                                                  "}")

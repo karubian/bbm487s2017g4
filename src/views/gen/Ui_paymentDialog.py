@@ -12,6 +12,13 @@ class Ui_paymentDialog(object):
     def setupUi(self, paymentDialog):
         paymentDialog.setObjectName("paymentDialog")
         paymentDialog.resize(662, 351)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(paymentDialog.sizePolicy().hasHeightForWidth())
+        paymentDialog.setSizePolicy(sizePolicy)
+        paymentDialog.setMinimumSize(QtCore.QSize(662, 351))
+        paymentDialog.setMaximumSize(QtCore.QSize(662, 351))
         paymentDialog.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.paymentFrame = QtWidgets.QFrame(paymentDialog)
         self.paymentFrame.setGeometry(QtCore.QRect(0, 0, 661, 351))
@@ -61,6 +68,7 @@ class Ui_paymentDialog(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.proceedButton.setObjectName("proceedButton")
         self.proceedButton_2 = QtWidgets.QPushButton(self.paymentFrame)
@@ -69,6 +77,7 @@ class Ui_paymentDialog(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.proceedButton_2.setObjectName("proceedButton_2")
 

@@ -12,6 +12,8 @@ class Ui_bookRegisterForm(object):
     def setupUi(self, bookRegisterForm):
         bookRegisterForm.setObjectName("bookRegisterForm")
         bookRegisterForm.resize(756, 662)
+        bookRegisterForm.setMinimumSize(QtCore.QSize(756, 662))
+        bookRegisterForm.setMaximumSize(QtCore.QSize(756, 662))
         self.frame = QtWidgets.QFrame(bookRegisterForm)
         self.frame.setGeometry(QtCore.QRect(0, 0, 751, 661))
         self.frame.setStyleSheet("QFrame {\n"
@@ -92,6 +94,7 @@ class Ui_bookRegisterForm(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.registerButton.setObjectName("registerButton")
         self.cancelButton = QtWidgets.QPushButton(self.frame)
@@ -103,6 +106,7 @@ class Ui_bookRegisterForm(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.cancelButton.setObjectName("cancelButton")
         self.descriptionTextEdit = QtWidgets.QTextEdit(self.frame)

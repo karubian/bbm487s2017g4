@@ -19,6 +19,7 @@ class Ui_memberMainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(memberMainWindow.sizePolicy().hasHeightForWidth())
         memberMainWindow.setSizePolicy(sizePolicy)
+        memberMainWindow.setMinimumSize(QtCore.QSize(1155, 839))
         memberMainWindow.setMaximumSize(QtCore.QSize(1155, 839))
         memberMainWindow.setAutoFillBackground(False)
         memberMainWindow.setStyleSheet("QFrame {\n"
@@ -30,6 +31,11 @@ class Ui_memberMainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.memberMainFrame = QtWidgets.QFrame(self.centralwidget)
         self.memberMainFrame.setGeometry(QtCore.QRect(0, 0, 1151, 831))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.memberMainFrame.sizePolicy().hasHeightForWidth())
+        self.memberMainFrame.setSizePolicy(sizePolicy)
         self.memberMainFrame.setMaximumSize(QtCore.QSize(1151, 831))
         self.memberMainFrame.setStyleSheet("QFrame {\n"
 "border: 3px solid gray;\n"
@@ -105,6 +111,7 @@ class Ui_memberMainWindow(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.payFineButton.setObjectName("payFineButton")
         self.avatarLabel = QtWidgets.QLabel(self.homeTab)
@@ -152,6 +159,7 @@ class Ui_memberMainWindow(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.cancelSelected.setObjectName("cancelSelected")
         self.tabWidget.addTab(self.homeTab, "")
@@ -199,6 +207,7 @@ class Ui_memberMainWindow(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.searchButton.setObjectName("searchButton")
         self.waitingListButton = QtWidgets.QPushButton(self.searchBooksTab)
@@ -207,6 +216,7 @@ class Ui_memberMainWindow(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 20px;\n"
+"border-radius:10px;\n"
 "}")
         self.waitingListButton.setObjectName("waitingListButton")
         self.checkoutButton = QtWidgets.QPushButton(self.searchBooksTab)
@@ -215,6 +225,7 @@ class Ui_memberMainWindow(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.checkoutButton.setObjectName("checkoutButton")
         self.searchBookWidget = QtWidgets.QTableWidget(self.searchBooksTab)
@@ -248,6 +259,7 @@ class Ui_memberMainWindow(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.resetButton.setObjectName("resetButton")
         self.tabWidget.addTab(self.searchBooksTab, "")
@@ -262,6 +274,7 @@ class Ui_memberMainWindow(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.returnBookButton.setObjectName("returnBookButton")
         self.viewBookWidget = QtWidgets.QTableWidget(self.viewBooksTab)
@@ -293,6 +306,7 @@ class Ui_memberMainWindow(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.logoutButton.setObjectName("logoutButton")
         self.logoutPng = QtWidgets.QLabel(self.memberMainFrame)
@@ -310,7 +324,7 @@ class Ui_memberMainWindow(object):
         self.actionBurak.setObjectName("actionBurak")
 
         self.retranslateUi(memberMainWindow)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(memberMainWindow)
 
     def retranslateUi(self, memberMainWindow):

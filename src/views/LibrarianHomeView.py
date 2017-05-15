@@ -180,6 +180,7 @@ class LibrarianHomeView(Ui_libraryMainWindow):
                                                   "color: white;\n"
                                                   "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
                                                   "font-size: 30px;\n"
+                                                  "border-radius:10px;\n"
                                                   "}")
 
     def pressed_color_change(self):
@@ -187,6 +188,7 @@ class LibrarianHomeView(Ui_libraryMainWindow):
                                                   "color: white;\n"
                                                   "background-color: red;\n"
                                                   "font-size: 30px;\n"
+                                                  "border-radius:10px;\n"
                                                   "}")
 
     def set_button_effects(self):

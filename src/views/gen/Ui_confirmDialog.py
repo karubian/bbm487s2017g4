@@ -12,6 +12,8 @@ class Ui_confirmDialog(object):
     def setupUi(self, confirmDialog):
         confirmDialog.setObjectName("confirmDialog")
         confirmDialog.resize(775, 370)
+        confirmDialog.setMinimumSize(QtCore.QSize(775, 370))
+        confirmDialog.setMaximumSize(QtCore.QSize(775, 370))
         confirmDialog.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.confirmFrame = QtWidgets.QFrame(confirmDialog)
         self.confirmFrame.setGeometry(QtCore.QRect(0, 0, 771, 371))
@@ -37,6 +39,7 @@ class Ui_confirmDialog(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.yesButton.setObjectName("yesButton")
         self.confirmMessage = QtWidgets.QLabel(self.confirmFrame)
@@ -55,15 +58,10 @@ class Ui_confirmDialog(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
+"\n"
 "}")
         self.noButton.setObjectName("noButton")
-        self.questionImg.raise_()
-        self.yesButton.raise_()
-        self.confirmMessage.raise_()
-        self.questionImg.raise_()
-        self.yesButton.raise_()
-        self.confirmMessage.raise_()
-        self.noButton.raise_()
 
         self.retranslateUi(confirmDialog)
         QtCore.QMetaObject.connectSlotsByName(confirmDialog)

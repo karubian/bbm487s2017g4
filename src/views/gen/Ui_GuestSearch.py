@@ -21,6 +21,11 @@ class Ui_GuestSearch(object):
         GuestSearch.setMaximumSize(QtCore.QSize(1154, 834))
         self.guestMainFrame = QtWidgets.QFrame(GuestSearch)
         self.guestMainFrame.setGeometry(QtCore.QRect(0, 0, 1151, 831))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.guestMainFrame.sizePolicy().hasHeightForWidth())
+        self.guestMainFrame.setSizePolicy(sizePolicy)
         self.guestMainFrame.setStyleSheet("QFrame {\n"
 "border: 3px solid gray;\n"
 "border-radius: 40px;\n"
@@ -106,7 +111,7 @@ class Ui_GuestSearch(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
-"border-radius:0px;\n"
+"border-radius:10px;\n"
 "}")
         self.searchButton_.setObjectName("searchButton_")
         self.searchBookWidget_ = QtWidgets.QTableWidget(self.frame)
@@ -153,7 +158,7 @@ class Ui_GuestSearch(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
-"border-radius:0px;\n"
+"border-radius:10px;\n"
 "}")
         self.resetButton.setObjectName("resetButton")
         self.backButton = QtWidgets.QPushButton(self.guestMainFrame)
@@ -165,6 +170,7 @@ class Ui_GuestSearch(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.backButton.setObjectName("backButton")
         self.logoutPng = QtWidgets.QLabel(self.guestMainFrame)

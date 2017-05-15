@@ -263,19 +263,24 @@ class MemberHomeView(Ui_memberMainWindow):
         self.ui.waitingListButton.pressed.connect(self.pressed_color_change)
         self.ui.payFineButton.released.connect(self.released_color_change)
         self.ui.payFineButton.pressed.connect(self.pressed_color_change)
-
+        self.ui.resetButton.released.connect(self.released_color_change)
+        self.ui.resetButton.pressed.connect(self.pressed_color_change)
     def released_color_change(self):
         if self.memberHome.sender().text() == 'Add To Waiting List':
             self.memberHome.sender().setStyleSheet("QPushButton {\n"
                                                    "color: white;\n"
                                                    "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
                                                    "font-size: 20px;\n"
+                                                  "border-radius:10px;\n"
+
                                                    "}")
         else:
             self.memberHome.sender().setStyleSheet("QPushButton {\n"
                                                    "color: white;\n"
                                                    "background-color:  QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
                                                    "font-size: 30px;\n"
+                                                  "border-radius:10px;\n"
+
                                                    "}")
 
     def pressed_color_change(self):
@@ -284,10 +289,13 @@ class MemberHomeView(Ui_memberMainWindow):
                                                    "color: white;\n"
                                                    "background-color: red;\n"
                                                    "font-size: 20px;\n"
+                                                  "border-radius:10px;\n"
+
                                                    "}")
         else:
             self.memberHome.sender().setStyleSheet("QPushButton {\n"
                                                    "color: white;\n"
                                                    "background-color:red;\n"
                                                    "font-size: 30px;\n"
+                                                  "border-radius:10px;\n"
                                                    "}")

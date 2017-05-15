@@ -11,7 +11,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_notifDialog(object):
     def setupUi(self, notifDialog):
         notifDialog.setObjectName("notifDialog")
-        notifDialog.resize(662, 429)
+        notifDialog.resize(662, 434)
+        notifDialog.setMinimumSize(QtCore.QSize(662, 434))
+        notifDialog.setMaximumSize(QtCore.QSize(662, 434))
         notifDialog.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.okButton = QtWidgets.QPushButton(notifDialog)
         self.okButton.setGeometry(QtCore.QRect(240, 310, 221, 71))
@@ -19,6 +21,7 @@ class Ui_notifDialog(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.okButton.setObjectName("okButton")
         self.norifFrame = QtWidgets.QFrame(notifDialog)
