@@ -73,8 +73,9 @@ class UserController:
         new_user = Member(found_user_info["username"], found_user_info["password"], found_user_info["name"],
                           found_user_info["surname"], found_user_info["email"])
         new_user.waitingBooks = found_user_info["waitingBooks"]
-        new_user.fineAmount = found_user_info["fineAmount"]
+        new_user.currentFine = found_user_info["currentFine"]
         new_user.loanedBooks = found_user_info["loanedBooks"]
         new_user.totalLoanedBooks = found_user_info["totalLoanedBooks"]
         new_user.lastLoanedBook = found_user_info["lastLoanedBook"]
+        new_user.formerFine = found_user_info["formerFine"]
         return new_user

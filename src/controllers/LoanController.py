@@ -13,7 +13,7 @@ class LoanController:
         self.bookController = BookController()
 
     def checkout_book(self, user, book):
-        if user.fineAmount is 0 and len(user.loanedBooks) < 4:
+        if user.currentFine is 0 and len(user.loanedBooks) < 4:
             user.loanedBooks.append(book.id)
             if book.id in user.waitingBooks:
                 user.waitingBooks.remove(book.id)
@@ -33,6 +33,7 @@ class LoanController:
         existing_loan.check_status()
         user.loanedBooks.remove(book.id)
         book.isAvailable = True
+        user.formerFine = user.formerFine + existing_loan.currentFine
         self.client.delete_loan_record(book.id)
         self.bookController.update_book_attributes(book)
         self.userController.update_member_attributes(user)
@@ -62,14 +63,14 @@ class LoanController:
             existing_loan = self.instantiate_loan(loan)
             existing_loan.check_status()
             existing_user = self.userController.get_user_by_id(existing_loan.user_id)
-            existing_user.fineAmount = existing_user.fineAmount + existing_loan.currentFine
+            existing_user.currentFine = existing_user.currentFine + existing_loan.currentFine
             self.userController.update_member_attributes(existing_user)
 
     def reset_fines(self):
         current_users = self.client.search_user_db("", "", "")
         for person in current_users:
             user_op = self.userController.get_user_by_id(person["_id"])
-            user_op.fineAmount = 0
+            user_op.currentFine = user_op.formerFine
             self.userController.update_member_attributes(user_op)
 
 

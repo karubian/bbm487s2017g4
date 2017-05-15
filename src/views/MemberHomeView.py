@@ -54,7 +54,7 @@ class MemberHomeView(Ui_memberMainWindow):
 
     def update_scene(self):
         self.ui.lastBookLabel.setText("Last Loaned Book : " + self.currentUser.lastLoanedBook)
-        self.ui.fineLabel.setText("Current Fine Amount : $" + str(self.currentUser.fineAmount))
+        self.ui.fineLabel.setText("Current Fine Amount : $" + str(self.currentUser.currentFine))
         self.ui.totalBooksLabel.setText("Total Loaned Books : " + str(self.currentUser.totalLoanedBooks))
 
     def logout(self):
@@ -67,10 +67,10 @@ class MemberHomeView(Ui_memberMainWindow):
         self.memberHome.show()
 
     def payment_operation(self):
-        self.payment = paymentView.PaymentView(self.currentUser.fineAmount)
+        self.payment = paymentView.PaymentView(self.currentUser.currentFine)
         self.payment.paymentPrompt.exec_()
         if self.payment.paymentFlag:
-            self.currentUser.fineAmount = 0
+            self.currentUser.currentFine = 0
             self.userController.update_member_attributes(self.currentUser)
         self.update_scene()
 
