@@ -17,6 +17,10 @@ class LoginView(Ui_Login):
         self.ui.searchButton.clicked.connect(self.guest_search)
         self.userController = UserController()
         self.error = errorView.ErrorView()
+        self.ui.loginButton.released.connect(self.released_color_change)
+        self.ui.loginButton.pressed.connect(self.pressed_color_change)
+        self.ui.searchButton.released.connect(self.released_color_change)
+        self.ui.searchButton.pressed.connect(self.pressed_color_change)
 
     def show(self):
         loan_controller = LoanController()
@@ -50,3 +54,20 @@ class LoginView(Ui_Login):
             self.error.set_error_text("Wrong username or password")
             self.error.show()
             self.clear_login_forms()
+
+
+    def released_color_change(self):
+        self.login.sender().setStyleSheet("QPushButton {\n"
+                                                  "color: white;\n"
+                                                  "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
+                                                  "font-size: 30px;\n"
+                                                  "border-radius:10px;\n"
+                                                  "}")
+
+    def pressed_color_change(self):
+        self.login.sender().setStyleSheet("QPushButton {\n"
+                                                  "color: white;\n"
+                                                  "background-color: red;\n"
+                                                  "font-size: 30px;\n"
+                                                  "border-radius:10px;\n"
+                                                  "}")

@@ -48,7 +48,7 @@ class DbClient:
 
     def delete_user_by_id(self, user_id):
         if type(user_id) is str:
-            self.db.books.delete_one({"_id": ObjectId(user_id)})
+            self.db.users.delete_one({"_id": ObjectId(user_id)})
         else:
             self.db.users.delete_one({'_id': user_id})
 
@@ -107,8 +107,8 @@ class DbClient:
         try:
             result = self.db.loans.insert_one(
                 {
-                    "book_id": new_loan.book_id,
-                    "user_id": new_loan.user_id,
+                    "book_id": str(new_loan.book_id),
+                    "user_id": str(new_loan.user_id),
                     "startDate": new_loan.startDate,
                     "returnDate": new_loan.returnDate,
                     "currentFine": new_loan.currentFine,
@@ -128,7 +128,7 @@ class DbClient:
     def update_member_db(self, newUserInfo, userToUpdate):
         try:
             self.db.users.update_one({
-                '_id': userToUpdate.id}, {"$set": {
+                '_id': ObjectId(userToUpdate.id)}, {"$set": {
                 "username": newUserInfo[0],
                 "password": newUserInfo[1],
                 "email": newUserInfo[2],
@@ -143,7 +143,7 @@ class DbClient:
     def update_member_attributes_db(self, updated_member):
         try:
             result = self.db.users.update_one({
-                '_id': updated_member.id}, {"$set": {
+                '_id': ObjectId(updated_member.id)}, {"$set": {
                 "username": updated_member.username,
                 "password": updated_member.password,
                 "email": updated_member.email_address,
@@ -161,10 +161,25 @@ class DbClient:
         except:
             return None
 
+    def update_loan_attributes_db(self, updated_loan):
+        try:
+            result = self.db.loans.update_one({
+                'book_id': ObjectId(updated_loan.book_id)}, {"$set": {
+                "currentFine": updated_loan.currentFine,
+                "formerFine": updated_loan.formerFine,
+                "status": updated_loan.status,
+                "returnDate": updated_loan.returnDate,
+                "startDate": updated_loan.startDate
+            }
+            })
+            return 1
+        except:
+            return None
+
     def update_book_attributes_db(self, updated_book):
         try:
             result = self.db.books.update_one({
-                '_id': updated_book.id}, {"$set": {
+                '_id': ObjectId(updated_book.id)}, {"$set": {
                 "title": updated_book.title,
                 "author": updated_book.author,
                 "year": updated_book.publishedYear,
@@ -181,7 +196,7 @@ class DbClient:
     def update_book_db(self, newBookInfo, bookToUpdate):
         try:
             result = self.db.books.update_one({
-                '_id': bookToUpdate.id}, {"$set": {
+                '_id': ObjectId(bookToUpdate.id)}, {"$set": {
                 "title": newBookInfo[0],
                 "author": newBookInfo[1],
                 "year": newBookInfo[2],

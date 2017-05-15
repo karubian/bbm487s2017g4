@@ -11,7 +11,16 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_memberMainWindow(object):
     def setupUi(self, memberMainWindow):
         memberMainWindow.setObjectName("memberMainWindow")
-        memberMainWindow.resize(1160, 839)
+        memberMainWindow.setWindowModality(QtCore.Qt.NonModal)
+        memberMainWindow.setEnabled(True)
+        memberMainWindow.resize(1155, 839)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(memberMainWindow.sizePolicy().hasHeightForWidth())
+        memberMainWindow.setSizePolicy(sizePolicy)
+        memberMainWindow.setMaximumSize(QtCore.QSize(1155, 839))
+        memberMainWindow.setAutoFillBackground(False)
         memberMainWindow.setStyleSheet("QFrame {\n"
 "border: 3px solid gray;\n"
 "border-radius: 40px;\n"
@@ -21,6 +30,7 @@ class Ui_memberMainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.memberMainFrame = QtWidgets.QFrame(self.centralwidget)
         self.memberMainFrame.setGeometry(QtCore.QRect(0, 0, 1151, 831))
+        self.memberMainFrame.setMaximumSize(QtCore.QSize(1151, 831))
         self.memberMainFrame.setStyleSheet("QFrame {\n"
 "border: 3px solid gray;\n"
 "border-radius: 40px;\n"
@@ -105,6 +115,10 @@ class Ui_memberMainWindow(object):
         self.avatarLabel.setObjectName("avatarLabel")
         self.waitingListWidget = QtWidgets.QTableWidget(self.homeTab)
         self.waitingListWidget.setGeometry(QtCore.QRect(40, 60, 741, 251))
+        self.waitingListWidget.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.waitingListWidget.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.waitingListWidget.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+        self.waitingListWidget.setAutoScroll(False)
         self.waitingListWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.waitingListWidget.setAlternatingRowColors(False)
         self.waitingListWidget.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
@@ -115,8 +129,9 @@ class Ui_memberMainWindow(object):
         self.waitingListWidget.setColumnCount(0)
         self.waitingListWidget.setObjectName("waitingListWidget")
         self.waitingListWidget.horizontalHeader().setCascadingSectionResizes(True)
-        self.waitingListWidget.horizontalHeader().setDefaultSectionSize(238)
+        self.waitingListWidget.horizontalHeader().setDefaultSectionSize(247)
         self.waitingListWidget.horizontalHeader().setStretchLastSection(True)
+        self.waitingListWidget.verticalHeader().setVisible(False)
         self.waitingListWidget.verticalHeader().setCascadingSectionResizes(True)
         self.waitingListWidget.verticalHeader().setStretchLastSection(False)
         self.waitingListLabel = QtWidgets.QLabel(self.homeTab)
@@ -179,7 +194,7 @@ class Ui_memberMainWindow(object):
 "}")
         self.titleLineEdit.setObjectName("titleLineEdit")
         self.searchButton = QtWidgets.QPushButton(self.searchBooksTab)
-        self.searchButton.setGeometry(QtCore.QRect(840, 20, 241, 71))
+        self.searchButton.setGeometry(QtCore.QRect(580, 20, 241, 71))
         self.searchButton.setStyleSheet("QPushButton {\n"
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
@@ -187,7 +202,7 @@ class Ui_memberMainWindow(object):
 "}")
         self.searchButton.setObjectName("searchButton")
         self.waitingListButton = QtWidgets.QPushButton(self.searchBooksTab)
-        self.waitingListButton.setGeometry(QtCore.QRect(840, 180, 241, 71))
+        self.waitingListButton.setGeometry(QtCore.QRect(60, 20, 241, 71))
         self.waitingListButton.setStyleSheet("QPushButton {\n"
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
@@ -195,7 +210,7 @@ class Ui_memberMainWindow(object):
 "}")
         self.waitingListButton.setObjectName("waitingListButton")
         self.checkoutButton = QtWidgets.QPushButton(self.searchBooksTab)
-        self.checkoutButton.setGeometry(QtCore.QRect(840, 100, 241, 71))
+        self.checkoutButton.setGeometry(QtCore.QRect(320, 20, 241, 71))
         self.checkoutButton.setStyleSheet("QPushButton {\n"
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
@@ -204,20 +219,37 @@ class Ui_memberMainWindow(object):
         self.checkoutButton.setObjectName("checkoutButton")
         self.searchBookWidget = QtWidgets.QTableWidget(self.searchBooksTab)
         self.searchBookWidget.setGeometry(QtCore.QRect(60, 270, 1021, 271))
+        self.searchBookWidget.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.searchBookWidget.setAutoScroll(False)
         self.searchBookWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.searchBookWidget.setAlternatingRowColors(False)
         self.searchBookWidget.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
         self.searchBookWidget.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         self.searchBookWidget.setShowGrid(True)
         self.searchBookWidget.setGridStyle(QtCore.Qt.SolidLine)
-        self.searchBookWidget.setRowCount(0)
-        self.searchBookWidget.setColumnCount(0)
+        self.searchBookWidget.setRowCount(1)
+        self.searchBookWidget.setColumnCount(6)
         self.searchBookWidget.setObjectName("searchBookWidget")
+        item = QtWidgets.QTableWidgetItem()
+        self.searchBookWidget.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.searchBookWidget.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        item.setTextAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignVCenter)
+        self.searchBookWidget.setHorizontalHeaderItem(2, item)
         self.searchBookWidget.horizontalHeader().setCascadingSectionResizes(True)
-        self.searchBookWidget.horizontalHeader().setDefaultSectionSize(238)
+        self.searchBookWidget.horizontalHeader().setDefaultSectionSize(385)
         self.searchBookWidget.horizontalHeader().setStretchLastSection(True)
         self.searchBookWidget.verticalHeader().setCascadingSectionResizes(True)
         self.searchBookWidget.verticalHeader().setStretchLastSection(False)
+        self.resetButton = QtWidgets.QPushButton(self.searchBooksTab)
+        self.resetButton.setGeometry(QtCore.QRect(840, 20, 241, 71))
+        self.resetButton.setStyleSheet("QPushButton {\n"
+"color: white;\n"
+"background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
+"font-size: 30px;\n"
+"}")
+        self.resetButton.setObjectName("resetButton")
         self.tabWidget.addTab(self.searchBooksTab, "")
         self.viewBooksTab = QtWidgets.QWidget()
         self.viewBooksTab.setObjectName("viewBooksTab")
@@ -234,6 +266,8 @@ class Ui_memberMainWindow(object):
         self.returnBookButton.setObjectName("returnBookButton")
         self.viewBookWidget = QtWidgets.QTableWidget(self.viewBooksTab)
         self.viewBookWidget.setGeometry(QtCore.QRect(30, 40, 991, 361))
+        self.viewBookWidget.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.viewBookWidget.setAutoScroll(False)
         self.viewBookWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.viewBookWidget.setAlternatingRowColors(False)
         self.viewBookWidget.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
@@ -244,8 +278,9 @@ class Ui_memberMainWindow(object):
         self.viewBookWidget.setColumnCount(0)
         self.viewBookWidget.setObjectName("viewBookWidget")
         self.viewBookWidget.horizontalHeader().setCascadingSectionResizes(True)
-        self.viewBookWidget.horizontalHeader().setDefaultSectionSize(238)
+        self.viewBookWidget.horizontalHeader().setDefaultSectionSize(340)
         self.viewBookWidget.horizontalHeader().setStretchLastSection(True)
+        self.viewBookWidget.verticalHeader().setVisible(False)
         self.viewBookWidget.verticalHeader().setCascadingSectionResizes(True)
         self.viewBookWidget.verticalHeader().setStretchLastSection(False)
         self.tabWidget.addTab(self.viewBooksTab, "")
@@ -275,7 +310,7 @@ class Ui_memberMainWindow(object):
         self.actionBurak.setObjectName("actionBurak")
 
         self.retranslateUi(memberMainWindow)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(memberMainWindow)
 
     def retranslateUi(self, memberMainWindow):
@@ -300,6 +335,13 @@ class Ui_memberMainWindow(object):
         self.waitingListButton.setText(_translate("memberMainWindow", "Add To Waiting List"))
         self.checkoutButton.setText(_translate("memberMainWindow", "Checkout"))
         self.searchBookWidget.setSortingEnabled(True)
+        item = self.searchBookWidget.horizontalHeaderItem(0)
+        item.setText(_translate("memberMainWindow", "Title"))
+        item = self.searchBookWidget.horizontalHeaderItem(1)
+        item.setText(_translate("memberMainWindow", "Author"))
+        item = self.searchBookWidget.horizontalHeaderItem(2)
+        item.setText(_translate("memberMainWindow", "Published Year"))
+        self.resetButton.setText(_translate("memberMainWindow", "Reset"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.searchBooksTab), _translate("memberMainWindow", "Search For Books"))
         self.returnBookButton.setText(_translate("memberMainWindow", "Return selected book"))
         self.viewBookWidget.setSortingEnabled(True)

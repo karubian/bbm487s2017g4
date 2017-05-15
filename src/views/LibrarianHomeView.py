@@ -2,6 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from views.gen.Ui_LibrarianHome import Ui_libraryMainWindow
 from controllers.UserController import UserController
 from controllers.BookController import BookController
+from controllers.LoanController import LoanController
 import views.ConfirmView as confirmView
 import views.ErrorView as errorView
 import views.UserRegisterFormView as userRegisterFormView
@@ -34,6 +35,7 @@ class LibrarianHomeView(Ui_libraryMainWindow):
         self.error = errorView.ErrorView()
         self.userController = UserController()
         self.bookController = BookController()
+        self.loanController = LoanController()
         self.customize_scene()
         self.current_user_queries = ["", "", ""]
         self.current_book_queries = ["", "", ""]
@@ -51,8 +53,6 @@ class LibrarianHomeView(Ui_libraryMainWindow):
         self.ui.bookTableWidget.setColumnCount(4)
         self.ui.userTableWidget.setHorizontalHeaderLabels(["Name", "Surname", "Username","User ID"])
         self.ui.bookTableWidget.setHorizontalHeaderLabels(["Title", "Author", "Published Year","Book ID"])
-        self.ui.bookTableWidget.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.ui.userTableWidget.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
 
     def reset_user_filters(self):
         self.current_user_queries = ["", "", ""]
@@ -65,25 +65,27 @@ class LibrarianHomeView(Ui_libraryMainWindow):
     def delete_selected_user(self):
         selected_row = self.ui.userTableWidget.currentRow()
         if selected_row > -1:
-            #selected_user = self.ui.userTableWidget.item(selected_row, 2).text()
             selected_user_id = self.ui.userTableWidget.item(selected_row, 3).text()
             self.confirm.confirm_flag = 0
             self.confirm.confirmScreen.exec_()
             if self.confirm.confirm_flag is 1:
                 self.userController.delete_one_user(str(selected_user_id))
+                self.loanController.delete_user_from_loans(str(selected_user_id))
+                self.bookController.delete_from_all_waiting_lists(str(selected_user_id))
+
             self.list_users()
 
     def delete_selected_book(self):
         selected_row = self.ui.bookTableWidget.currentRow()
         if selected_row > -1:
-            #selected_book = self.ui.bookTableWidget.item(selected_row, 0).text()
             selected_book_id = self.ui.bookTableWidget.item(selected_row, 3).text()
             self.confirm.confirm_flag = 0
             self.confirm.confirmScreen.exec_()
             if self.confirm.confirm_flag is 1:
-                if self.bookController.get_book_by_id(str(selected_book_id)).isAvailable:
-                    self.bookController.delete_one_book_by_id(str(selected_book_id))
-                    self.userController.delete_from_all_owned_books(str(selected_book_id))
+                self.bookController.delete_one_book_by_id(str(selected_book_id))
+                self.userController.delete_from_all_owned_books(str(selected_book_id))
+                self.userController.delete_from_all_waiting_lists(str(selected_book_id))
+                self.loanController.delete_book_from_loans(str(selected_book_id))
             self.list_books()
 
     def list_users(self):

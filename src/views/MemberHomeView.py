@@ -29,6 +29,7 @@ class MemberHomeView(Ui_memberMainWindow):
         self.ui.cancelSelected.clicked.connect(self.cancel_waiting)
         self.ui.returnBookButton.clicked.connect(self.return_operation)
         self.ui.payFineButton.clicked.connect(self.payment_operation)
+        self.ui.resetButton.clicked.connect(self.reset_book_filters)
         self.ui.waitingListWidget.cellDoubleClicked.connect(self.show_book_info_waiting)
         self.ui.viewBookWidget.cellDoubleClicked.connect(self.show_book_info_view)
         self.ui.searchBookWidget.cellDoubleClicked.connect(self.show_book_info_search)
@@ -45,12 +46,12 @@ class MemberHomeView(Ui_memberMainWindow):
     def prepare_scene(self):
         self.ui.greetingLabel.setText("Hi, " + str(self.currentUser.name) + " " + str(self.currentUser.surname))
         self.ui.dateLabel.setText(datetime.datetime.now().strftime("%Y-%m-%d"))
-        self.ui.searchBookWidget.setColumnCount(3)
-        self.ui.viewBookWidget.setColumnCount(3)
-        self.ui.waitingListWidget.setColumnCount(3)
-        self.ui.searchBookWidget.setHorizontalHeaderLabels(["Title", "Author", "Published Year"])
-        self.ui.viewBookWidget.setHorizontalHeaderLabels(["Title", "Author", "Published Year"])
-        self.ui.waitingListWidget.setHorizontalHeaderLabels(["Title", "Author", "Published Year"])
+        self.ui.searchBookWidget.setColumnCount(4)
+        self.ui.viewBookWidget.setColumnCount(4)
+        self.ui.waitingListWidget.setColumnCount(4)
+        self.ui.searchBookWidget.setHorizontalHeaderLabels(["Title", "Author", "Year","User ID"])
+        self.ui.viewBookWidget.setHorizontalHeaderLabels(["Title", "Author", "Published Year","User ID"])
+        self.ui.waitingListWidget.setHorizontalHeaderLabels(["Title", "Author", "Published Year","User ID"])
 
     def update_scene(self):
         self.ui.lastBookLabel.setText("Last Loaned Book : " + self.currentUser.lastLoanedBook)
@@ -66,19 +67,25 @@ class MemberHomeView(Ui_memberMainWindow):
     def show(self):
         self.memberHome.show()
 
+    def reset_book_filters(self):
+        self.current_book_queries = ["", "", ""]
+        self.update_lists()
+
     def payment_operation(self):
-        self.payment = paymentView.PaymentView(self.currentUser.currentFine)
+        self.payment = paymentView.PaymentView(self.currentUser.formerFine)
         self.payment.paymentPrompt.exec_()
         if self.payment.paymentFlag:
-            self.currentUser.currentFine = 0
+            self.currentUser.currentFine = self.currentUser.currentFine - self.currentUser.formerFine
+            self.currentUser.formerFine= 0
             self.userController.update_member_attributes(self.currentUser)
+            self.loanController.update_fines()
         self.update_scene()
 
     def show_book_info_view(self):
         selected_row = self.ui.viewBookWidget.currentRow()
         if selected_row > -1:
-            selected_book_title = self.ui.viewBookWidget.item(selected_row, 0).text()
-            selected_book = self.bookController.get_book_by_title(selected_book_title)
+            selected_book_id = self.ui.viewBookWidget.item(selected_row, 3).text()
+            selected_book = self.bookController.get_book_by_id(str(selected_book_id))
             self.book_info = bookInfoView.BookInfoView(selected_book)
             self.book_info.update_scene()
             self.book_info.show()
@@ -86,8 +93,8 @@ class MemberHomeView(Ui_memberMainWindow):
     def show_book_info_search(self):
         selected_row = self.ui.searchBookWidget.currentRow()
         if selected_row > -1:
-            selected_book_title = self.ui.searchBookWidget.item(selected_row, 0).text()
-            selected_book = self.bookController.get_book_by_title(selected_book_title)
+            selected_book_id = self.ui.searchBookWidget.item(selected_row, 3).text()
+            selected_book = self.bookController.get_book_by_id(selected_book_id)
             self.book_info = bookInfoView.BookInfoView(selected_book)
             self.book_info.update_scene()
             self.book_info.show()
@@ -95,15 +102,12 @@ class MemberHomeView(Ui_memberMainWindow):
     def show_book_info_waiting(self):
         selected_row = self.ui.waitingListWidget.currentRow()
         if selected_row > -1:
-            selected_book_title = self.ui.waitingListWidget.item(selected_row, 0).text()
-            selected_book = self.bookController.get_book_by_title(selected_book_title)
+            selected_book_id = self.ui.waitingListWidget.item(selected_row, 3).text()
+            selected_book = self.bookController.get_book_by_title(str(selected_book_id))
             self.book_info = bookInfoView.BookInfoView(selected_book)
             self.book_info.update_scene()
             self.book_info.show()
 
-    def reset_book_filters(self):
-        self.current_book_queries = ["", "", ""]
-        self.update_lists()
 
     def list_books(self):
         query_result = self.bookController.search_books(self.current_book_queries[0], self.current_book_queries[1],
@@ -116,6 +120,7 @@ class MemberHomeView(Ui_memberMainWindow):
             self.ui.searchBookWidget.setItem(i, 0, QtWidgets.QTableWidgetItem(record["title"]))
             self.ui.searchBookWidget.setItem(i, 1, QtWidgets.QTableWidgetItem(record["author"]))
             self.ui.searchBookWidget.setItem(i, 2, QtWidgets.QTableWidgetItem(record["year"]))
+            self.ui.searchBookWidget.setItem(i, 3, QtWidgets.QTableWidgetItem(str(record["_id"])))
             if record["isAvailable"] is False:
                 self.ui.searchBookWidget.item(i, 0).setBackground(QtGui.QColor(255, 68, 68))
                 self.ui.searchBookWidget.item(i, 1).setBackground(QtGui.QColor(255, 68, 68))
@@ -133,8 +138,8 @@ class MemberHomeView(Ui_memberMainWindow):
     def checkout_book(self):
         selected_row = self.ui.searchBookWidget.currentRow()
         if selected_row > -1:
-            selected_book_title = self.ui.searchBookWidget.item(selected_row, 0).text()
-            selected_book = self.bookController.get_book_by_title(selected_book_title)
+            selected_book_id = self.ui.searchBookWidget.item(selected_row, 3).text()
+            selected_book = self.bookController.get_book_by_id(str(selected_book_id))
             if selected_book.isAvailable is False:
                 self.error.set_error_text("You can't checkout an unavailable book.")
                 self.error.errorScreen.exec_()
@@ -146,8 +151,8 @@ class MemberHomeView(Ui_memberMainWindow):
     def add_to_waiting_list(self):
         selected_row = self.ui.searchBookWidget.currentRow()
         if selected_row > -1:
-            selected_book_title = self.ui.searchBookWidget.item(selected_row, 0).text()
-            selected_book = self.bookController.get_book_by_title(selected_book_title)
+            selected_book_id = self.ui.searchBookWidget.item(selected_row, 3).text()
+            selected_book = self.bookController.get_book_by_id(str(selected_book_id))
 
             if selected_book.isAvailable is True:
                 self.error.set_error_text("You can't add an available book to your waiting list.")
@@ -186,6 +191,7 @@ class MemberHomeView(Ui_memberMainWindow):
             self.ui.waitingListWidget.setItem(i, 0, QtWidgets.QTableWidgetItem(waited_book.title))
             self.ui.waitingListWidget.setItem(i, 1, QtWidgets.QTableWidgetItem(waited_book.author))
             self.ui.waitingListWidget.setItem(i, 2, QtWidgets.QTableWidgetItem(waited_book.publishedYear))
+            self.ui.waitingListWidget.setItem(i, 3, QtWidgets.QTableWidgetItem(str(waited_book.id)))
             if waited_book.isAvailable is False:
                 self.ui.waitingListWidget.item(i, 0).setBackground(QtGui.QColor(255, 68, 68))
                 self.ui.waitingListWidget.item(i, 1).setBackground(QtGui.QColor(255, 68, 68))
@@ -203,14 +209,15 @@ class MemberHomeView(Ui_memberMainWindow):
             self.ui.viewBookWidget.setItem(i, 0, QtWidgets.QTableWidgetItem(loaned_book.title))
             self.ui.viewBookWidget.setItem(i, 1, QtWidgets.QTableWidgetItem(loaned_book.author))
             self.ui.viewBookWidget.setItem(i, 2, QtWidgets.QTableWidgetItem(loaned_book.publishedYear))
+            self.ui.viewBookWidget.setItem(i, 3, QtWidgets.QTableWidgetItem(str(loaned_book.id)))
             i = i + 1
         self.show()
 
     def cancel_waiting(self):
         selected_row = self.ui.waitingListWidget.currentRow()
         if selected_row > -1:
-            # selected_book_title = self.ui.waitingListWidget.item(selected_row, 0).text()
-            selected_book = self.bookController.get_book_by_id(self.currentUser.waitingBooks[selected_row])
+            selected_book_id = self.ui.waitingListWidget.item(selected_row, 3).text()
+            selected_book = self.bookController.get_book_by_id(str(selected_book_id))
             self.confirm.confirm_flag = 0
             self.confirm.set_confirm_text("Are you sure you want to cancel waiting for this book?")
             self.confirm.confirmScreen.exec_()
@@ -224,8 +231,8 @@ class MemberHomeView(Ui_memberMainWindow):
     def return_operation(self):
         selected_row = self.ui.viewBookWidget.currentRow()
         if selected_row > -1:
-            # selected_book_title = self.ui.viewBookWidget.item(selected_row, 0).text()
-            selected_book = self.bookController.get_book_by_id(self.currentUser.loanedBooks[selected_row])
+            selected_book_id = self.ui.viewBookWidget.item(selected_row, 3).text()
+            selected_book = self.bookController.get_book_by_id(str(selected_book_id))
             self.confirm.confirm_flag = 0
             self.confirm.set_confirm_text("Are you sure you want to return this book?")
             self.confirm.confirmScreen.exec_()

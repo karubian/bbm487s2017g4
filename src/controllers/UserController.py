@@ -15,7 +15,7 @@ class UserController:
         elif found_user_info["type"] == "librarian":
             new_user = Librarian(found_user_info["username"], found_user_info["password"], found_user_info["name"],
                                  found_user_info["surname"], found_user_info["email"])
-        new_user.id = found_user_info["_id"]
+        new_user.id = str(found_user_info["_id"])
 
         return new_user
 
@@ -28,7 +28,7 @@ class UserController:
             elif found_user_info["type"] == "librarian":
                 new_user = Librarian(found_user_info["username"], found_user_info["password"], found_user_info["name"],
                                      found_user_info["surname"], found_user_info["email"])
-            new_user.id = found_user_info["_id"]
+            new_user.id = str(found_user_info["_id"])
 
             return new_user
 
@@ -41,7 +41,7 @@ class UserController:
         self.client.update_member_attributes_db(user)
 
     def delete_one_user(self, user_id):
-        self.client.delete_user_by_id(user_id)
+        self.client.delete_user_by_id(str(user_id))
 
     def add_new_member(self, username, password, name, surname, email):
         new_user = Member(username, password, name, surname, email)
@@ -58,7 +58,7 @@ class UserController:
         for user in all_users:
             if book_id in user["waitingBooks"]:
                 operated_user = self.instantiate_user(user)
-                operated_user.waitingBooks.remove(book_id)
+                operated_user.waitingBooks.remove(str(book_id))
                 self.update_member_attributes(operated_user)
 
     def delete_from_all_owned_books(self, book_id):
@@ -66,8 +66,9 @@ class UserController:
         for user in all_users:
             if book_id in user["loanedBooks"]:
                 operated_user = self.instantiate_user(user)
-                operated_user.loanedBooks.remove(book_id)
+                operated_user.loanedBooks.remove(str(book_id))
                 self.update_member_attributes(operated_user)
+
 
     def instantiate_user(self, found_user_info):
         new_user = Member(found_user_info["username"], found_user_info["password"], found_user_info["name"],
@@ -78,4 +79,5 @@ class UserController:
         new_user.totalLoanedBooks = found_user_info["totalLoanedBooks"]
         new_user.lastLoanedBook = found_user_info["lastLoanedBook"]
         new_user.formerFine = found_user_info["formerFine"]
+        new_user.id = str(found_user_info["_id"])
         return new_user

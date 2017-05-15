@@ -23,7 +23,7 @@ class BookController:
         self.client.update_book_attributes_db(book)
 
     def delete_one_book_by_id(self, book_id):
-        self.client.delete_book_by_id(book_id)
+        self.client.delete_book_by_id(str(book_id))
 
     def add_new_book(self, title, author, year, description, publisher):
         new_book = Book(title, author, year)
@@ -33,7 +33,7 @@ class BookController:
 
     def instantiate_book(self,found_book_info):
         new_book = Book(found_book_info["title"], found_book_info["author"], found_book_info["year"])
-        new_book.id = found_book_info["_id"]
+        new_book.id = str(found_book_info["_id"])
         new_book.isAvailable = found_book_info["isAvailable"]
         new_book.waitingList = found_book_info["waitingList"]
         new_book.description = found_book_info["description"]
@@ -45,3 +45,11 @@ class BookController:
 
     def search_books(self, title, author, year):
         return self.client.search_book_db(title, author, year)
+
+    def delete_from_all_waiting_lists(self, user_id):
+        all_books = self.client.search_book_db("", "", "")
+        for book in all_books:
+            if user_id in book["waitingList"]:
+                operated_book = self.instantiate_book(book)
+                operated_book.waitingList.remove(str(user_id))
+                self.update_book_attributes(operated_book)

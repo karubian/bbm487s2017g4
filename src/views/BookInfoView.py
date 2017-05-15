@@ -12,6 +12,7 @@ class BookInfoView(Ui_bookInfoWindow):
         self.update_scene()
 
     def show(self):
+        self.update_scene()
         self.bookInfoWindow.show()
 
     def terminate(self):

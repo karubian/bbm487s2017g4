@@ -12,6 +12,13 @@ class Ui_Login(object):
     def setupUi(self, Login):
         Login.setObjectName("Login")
         Login.resize(979, 810)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(Login.sizePolicy().hasHeightForWidth())
+        Login.setSizePolicy(sizePolicy)
+        Login.setMinimumSize(QtCore.QSize(979, 810))
+        Login.setMaximumSize(QtCore.QSize(979, 810))
         Login.setStyleSheet("QDialog {\n"
 "background: gray;\n"
 "}\n"
@@ -27,7 +34,7 @@ class Ui_Login(object):
         self.loginFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.loginFrame.setObjectName("loginFrame")
         self.loginButton = QtWidgets.QPushButton(self.loginFrame)
-        self.loginButton.setGeometry(QtCore.QRect(680, 260, 151, 151))
+        self.loginButton.setGeometry(QtCore.QRect(680, 270, 151, 141))
         font = QtGui.QFont()
         font.setPointSize(-1)
         self.loginButton.setFont(font)
@@ -35,6 +42,7 @@ class Ui_Login(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.loginButton.setObjectName("loginButton")
         self.searchButton = QtWidgets.QPushButton(self.loginFrame)
@@ -46,6 +54,7 @@ class Ui_Login(object):
 "color: white;\n"
 "background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #dd7a23, stop: 0.1 #e87919, stop: 0.49 #ce650a, stop: 0.5 #c45d03, stop: 1 #d16304);\n"
 "font-size: 30px;\n"
+"border-radius:10px;\n"
 "}")
         self.searchButton.setObjectName("searchButton")
         self.titleLabel = QtWidgets.QLabel(self.loginFrame)
@@ -54,7 +63,7 @@ class Ui_Login(object):
         font.setPointSize(-1)
         self.titleLabel.setFont(font)
         self.titleLabel.setStyleSheet("QLabel {\n"
-"color:gray;\n"
+"color:black;\n"
 "border: 3px solid rgb(255, 255, 222);\n"
 "border-radius: 40px;\n"
 "background:rgb(255, 255, 222);\n"

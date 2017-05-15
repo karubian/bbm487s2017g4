@@ -31,7 +31,7 @@ class Ui_paymentDialog(object):
 "}")
         self.paymentLabel.setObjectName("paymentLabel")
         self.priceLabel = QtWidgets.QLabel(self.paymentFrame)
-        self.priceLabel.setGeometry(QtCore.QRect(380, 30, 111, 51))
+        self.priceLabel.setGeometry(QtCore.QRect(380, 30, 231, 51))
         self.priceLabel.setStyleSheet("QLabel {\n"
 "border: 3px solid rgb(255, 255, 222);\n"
 "font-size:30px;\n"
