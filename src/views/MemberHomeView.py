@@ -23,6 +23,7 @@ class MemberHomeView(Ui_memberMainWindow):
         self.userController = UserController()
         self.bookController = BookController()
         self.loanController = LoanController()
+        self.loanController.update_fines()
         self.ui.searchButton.clicked.connect(self.search_books)
         self.ui.waitingListButton.clicked.connect(self.add_to_waiting_list)
         self.ui.checkoutButton.clicked.connect(self.checkout_book)
@@ -49,9 +50,9 @@ class MemberHomeView(Ui_memberMainWindow):
         self.ui.searchBookWidget.setColumnCount(4)
         self.ui.viewBookWidget.setColumnCount(4)
         self.ui.waitingListWidget.setColumnCount(4)
-        self.ui.searchBookWidget.setHorizontalHeaderLabels(["Title", "Author", "Year","User ID"])
-        self.ui.viewBookWidget.setHorizontalHeaderLabels(["Title", "Author", "Published Year","User ID"])
-        self.ui.waitingListWidget.setHorizontalHeaderLabels(["Title", "Author", "Published Year","User ID"])
+        self.ui.searchBookWidget.setHorizontalHeaderLabels(["Title", "Author", "Year", "User ID"])
+        self.ui.viewBookWidget.setHorizontalHeaderLabels(["Title", "Author", "Return Date", "User ID"])
+        self.ui.waitingListWidget.setHorizontalHeaderLabels(["Title", "Author", "Published Year", "User ID"])
 
     def update_scene(self):
         self.currentUser = self.userController.get_user_by_id(self.currentUser.id)
@@ -109,7 +110,6 @@ class MemberHomeView(Ui_memberMainWindow):
             self.book_info = bookInfoView.BookInfoView(selected_book)
             self.book_info.update_scene()
             self.book_info.show()
-
 
     def list_books(self):
         query_result = self.bookController.search_books(self.current_book_queries[0], self.current_book_queries[1],
@@ -208,10 +208,15 @@ class MemberHomeView(Ui_memberMainWindow):
 
         for record in self.currentUser.loanedBooks:
             loaned_book = self.bookController.get_book_by_id(record)
+            return_date = self.loanController.get_loan_record(loaned_book.id)["returnDate"]
             self.ui.viewBookWidget.setItem(i, 0, QtWidgets.QTableWidgetItem(loaned_book.title))
             self.ui.viewBookWidget.setItem(i, 1, QtWidgets.QTableWidgetItem(loaned_book.author))
-            self.ui.viewBookWidget.setItem(i, 2, QtWidgets.QTableWidgetItem(loaned_book.publishedYear))
+            self.ui.viewBookWidget.setItem(i, 2, QtWidgets.QTableWidgetItem(return_date.strftime("%d %b %Y")))
             self.ui.viewBookWidget.setItem(i, 3, QtWidgets.QTableWidgetItem(str(loaned_book.id)))
+            if datetime.datetime.now() > return_date:
+                self.ui.viewBookWidget.item(i, 0).setBackground(QtGui.QColor(255, 68, 68))
+                self.ui.viewBookWidget.item(i, 1).setBackground(QtGui.QColor(255, 68, 68))
+                self.ui.viewBookWidget.item(i, 2).setBackground(QtGui.QColor(255, 68, 68))
             i = i + 1
         self.show()
 
