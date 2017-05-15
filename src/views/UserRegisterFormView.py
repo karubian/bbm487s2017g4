@@ -57,7 +57,14 @@ class UserRegisterFormView(Ui_userRegisterForm):
                 self.error.set_error_text("Please fill the blank fields.")
                 self.error.errorScreen.exec_()
         elif self.type is 1:
-            self.userController.update_member([username, password, email, name, surname], self.currentUser)
+            for field in [username, password, name, surname, email]:
+                if len(field) == 0:
+                    validation_flag = 1
+            if validation_flag is 0:
+                self.userController.update_member([username, password, email, name, surname], self.currentUser)
+            else:
+                self.error.set_error_text("Please fill the blank fields.")
+                self.error.errorScreen.exec_()
         if error_flag is 0:
             self.userRegisterFormScreen.hide()
             self.clear_forms()

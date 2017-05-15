@@ -73,7 +73,7 @@ class MemberHomeView(Ui_memberMainWindow):
         self.update_lists()
 
     def payment_operation(self):
-        self.payment = paymentView.PaymentView(self.currentUser.formerFine)
+        self.payment = paymentView.PaymentView(self.currentUser.currentFine)
         self.payment.paymentPrompt.exec_()
         if self.payment.paymentFlag:
             self.loanController.reset_user_loans(self.currentUser.id)

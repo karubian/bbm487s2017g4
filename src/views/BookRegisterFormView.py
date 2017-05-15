@@ -52,6 +52,13 @@ class BookRegisterFormView(Ui_bookRegisterForm):
             if validation_flag is 0:
                 self.bookController.add_new_book(title, author, year,description, publisher)
         elif self.type is 1:
-            self.bookController.update_book([title, author, year, description, publisher], self.currentBook)
+            validation_flag = 0
+            for field in [author, title, year,description,publisher]:
+                if len(field) == 0:
+                    self.error.set_error_text("Please fill the blank fields.")
+                    self.error.show()
+                    validation_flag = 1
+            if validation_flag is 0:
+                self.bookController.update_book([title, author, year, description, publisher], self.currentBook)
         self.bookRegisterFormScreen.hide()
         self.clear_forms()
