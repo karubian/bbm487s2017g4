@@ -14,7 +14,11 @@ class LoanController:
         self.bookController = BookController()
 
     def checkout_book(self, user, book):
-        if user.currentFine is 0 and len(user.loanedBooks) < 4:
+        if user.currentFine is not 0:
+            return 0
+        elif len(user.loanedBooks) >= 4:
+            return 1
+        else:
             user.loanedBooks.append(book.id)
             if book.id in user.waitingBooks:
                 user.waitingBooks.remove(str(book.id))
@@ -25,6 +29,7 @@ class LoanController:
             self.bookController.update_book_attributes(book)
             new_loan = Loan(str(user.id), str(book.id))
             self.client.add_loan_record(new_loan)
+            return 2
 
     def return_book(self, user, book):
         loan_info = self.get_loan_record(str(book.id))

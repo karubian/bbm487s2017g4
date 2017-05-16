@@ -146,7 +146,16 @@ class MemberHomeView(Ui_memberMainWindow):
                 self.error.set_error_text("You can't checkout an unavailable book.")
                 self.error.errorScreen.exec_()
             else:
-                self.loanController.checkout_book(self.currentUser, selected_book)
+                indicator = self.loanController.checkout_book(self.currentUser, selected_book)
+                if indicator == 0:
+                    self.error.set_error_text("You cannot checkout with existing fines.")
+                    self.error.errorScreen.exec_()
+                elif indicator == 1:
+                    self.error.set_error_text("You cannot borrow more than 4 books.")
+                    self.error.errorScreen.exec_()
+                elif indicator == 2:
+                    self.notification.set_notif_text("\""+selected_book.title+"\" is added to your books.")
+                    self.notification.notificationScreen.exec_()
                 self.update_lists()
                 self.update_scene()
 
