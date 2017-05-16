@@ -57,7 +57,7 @@ class MemberHomeView(Ui_memberMainWindow):
     def update_scene(self):
         self.currentUser = self.userController.get_user_by_id(self.currentUser.id)
         self.ui.lastBookLabel.setText("Last Loaned Book : " + self.currentUser.lastLoanedBook)
-        self.ui.fineLabel.setText("Current Fine Amount : $" + str(self.currentUser.currentFine))
+        self.ui.fineLabel.setText("Current Fine Amount : ₺" + str(self.currentUser.currentFine))
         self.ui.totalBooksLabel.setText("Total Loaned Books : " + str(self.currentUser.totalLoanedBooks))
 
     def logout(self):
@@ -106,7 +106,7 @@ class MemberHomeView(Ui_memberMainWindow):
         selected_row = self.ui.waitingListWidget.currentRow()
         if selected_row > -1:
             selected_book_id = self.ui.waitingListWidget.item(selected_row, 3).text()
-            selected_book = self.bookController.get_book_by_title(str(selected_book_id))
+            selected_book = self.bookController.get_book_by_id(str(selected_book_id))
             self.book_info = bookInfoView.BookInfoView(selected_book)
             self.book_info.update_scene()
             self.book_info.show()
@@ -223,9 +223,9 @@ class MemberHomeView(Ui_memberMainWindow):
             self.ui.viewBookWidget.setItem(i, 2, QtWidgets.QTableWidgetItem(return_date.strftime("%d %b %Y")))
             self.ui.viewBookWidget.setItem(i, 3, QtWidgets.QTableWidgetItem(str(loaned_book.id)))
             if datetime.datetime.now() > return_date:
-                self.ui.viewBookWidget.item(i, 0).setBackground(QtGui.QColor(255, 68, 68))
-                self.ui.viewBookWidget.item(i, 1).setBackground(QtGui.QColor(255, 68, 68))
-                self.ui.viewBookWidget.item(i, 2).setBackground(QtGui.QColor(255, 68, 68))
+                self.ui.viewBookWidget.item(i, 0).setBackground(QtGui.QColor(206,190,190))
+                self.ui.viewBookWidget.item(i, 1).setBackground(QtGui.QColor(206,190,190))
+                self.ui.viewBookWidget.item(i, 2).setBackground(QtGui.QColor(206,190,190))
             i = i + 1
         self.show()
 

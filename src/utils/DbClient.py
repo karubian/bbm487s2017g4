@@ -138,7 +138,7 @@ class DbClient:
             })
             return 1
         except:
-            return None
+            return 0
 
     def update_member_attributes_db(self, updated_member):
         try:

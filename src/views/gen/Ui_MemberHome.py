@@ -324,7 +324,7 @@ class Ui_memberMainWindow(object):
         self.actionBurak.setObjectName("actionBurak")
 
         self.retranslateUi(memberMainWindow)
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(memberMainWindow)
 
     def retranslateUi(self, memberMainWindow):

@@ -15,7 +15,7 @@ class UserRegisterFormView(Ui_userRegisterForm):
         self.error = errorView.ErrorView()
         self.currentUser = None
         self.type = 0  # 0 for create user 1 for update user
-        self.set_button_effects()
+
 
     def show(self):
         self.userRegisterFormScreen.show()

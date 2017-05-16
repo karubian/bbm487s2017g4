@@ -13,7 +13,7 @@ class PaymentView(Ui_paymentDialog):
         self.paymentFlag = 0
         self.ui.proceedButton.clicked.connect(self.transaction)
         self.ui.proceedButton_2.clicked.connect(self.terminate)
-        self.ui.priceLabel.setText(str(self.fineAmount) + " TRY")
+        self.ui.priceLabel.setText(str(self.fineAmount) + " TL")
         self.set_button_effects()
     def show(self):
         self.paymentPrompt.show()
@@ -22,7 +22,7 @@ class PaymentView(Ui_paymentDialog):
         self.paymentPrompt.hide()
 
     def transaction(self):
-        self.confirm.set_confirm_text("Are you sure you want to pay " + str(self.fineAmount) + " TRY as fine ? ")
+        self.confirm.set_confirm_text("Are you sure you want to pay " + str(self.fineAmount) + " TL as fine ? ")
         self.confirm.confirmScreen.exec_()
         if self.confirm.confirm_flag:
             self.paymentFlag = 1
