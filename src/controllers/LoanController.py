@@ -100,6 +100,6 @@ class LoanController:
         for loan_info in loans:
             if loan_info["user_id"] == user_id and loan_info["status"] == 1:
                 updated_loan = self.instantiate_loan(loan_info)
-                updated_loan.startDate = datetime.datetime.now()
+                updated_loan.startDate = datetime.datetime.now() - datetime.timedelta(days=40)
                 updated_loan.check_status()
                 self.update_loan_attributes(updated_loan)
